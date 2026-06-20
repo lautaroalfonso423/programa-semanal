@@ -1,0 +1,644 @@
+/* =========================
+   PALETA (BASADA EN LOGO)
+========================= */
+
+:root{
+
+--bg:#f8f5f7;
+
+--card:#ffffff;
+
+--primary:#5A184D;
+
+--primary-dark:#47113d;
+
+--primary-light:#D87AB5;
+
+--secondary:#EEC6DC;
+
+--accent:#F0B52A;
+
+--text:#2b1b2c;
+
+--muted:#756673;
+
+--border:#efe4ea;
+
+--shadow:
+0 18px 50px rgba(90,24,77,.08);
+
+}
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body{
+
+font-family:
+Inter,
+-apple-system,
+BlinkMacSystemFont,
+sans-serif;
+
+color:var(--text);
+
+min-height:100vh;
+
+background:
+
+radial-gradient(
+circle at top left,
+rgba(216,122,181,.10),
+transparent 30%
+),
+
+radial-gradient(
+circle at bottom right,
+rgba(240,181,42,.08),
+transparent 30%
+),
+
+linear-gradient(
+180deg,
+#faf8fa,
+var(--bg)
+);
+
+background-attachment:fixed;
+
+-webkit-font-smoothing:antialiased;
+
+}
+
+
+
+/* =========================
+   LOGIN
+========================= */
+
+.login{
+
+min-height:100vh;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+padding:32px;
+
+}
+
+.login h2{
+
+font-size:40px;
+
+font-weight:800;
+
+letter-spacing:-2px;
+
+color:var(--primary);
+
+margin-bottom:28px;
+
+}
+
+
+
+.login input{
+
+width:340px;
+
+max-width:100%;
+
+padding:18px;
+
+margin-bottom:14px;
+
+background:white;
+
+border:
+
+1px solid
+var(--border);
+
+border-radius:18px;
+
+font-size:15px;
+
+transition:.25s;
+
+box-shadow:
+
+0 8px 20px
+rgba(0,0,0,.02);
+
+}
+
+.login input:focus{
+
+outline:none;
+
+border-color:
+
+var(--primary-light);
+
+transform:
+
+translateY(-2px);
+
+box-shadow:
+
+0 0 0 4px
+rgba(216,122,181,.15);
+
+}
+
+
+
+.login button{
+
+width:340px;
+
+max-width:100%;
+
+padding:18px;
+
+border:none;
+
+border-radius:18px;
+
+background:
+
+linear-gradient(
+135deg,
+var(--primary),
+#7a2d67
+);
+
+color:white;
+
+font-size:15px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.25s;
+
+box-shadow:
+
+0 16px 30px
+rgba(90,24,77,.15);
+
+}
+
+.login button:hover{
+
+transform:
+
+translateY(-3px);
+
+background:
+
+linear-gradient(
+135deg,
+var(--primary-dark),
+var(--primary)
+);
+
+}
+
+
+
+/* =========================
+   APP
+========================= */
+
+.app{
+
+display:none;
+
+max-width:680px;
+
+margin:auto;
+
+padding:50px 20px;
+
+}
+
+
+
+/* =========================
+   BANNER
+========================= */
+
+.app-image-container{
+
+margin-bottom:24px;
+
+}
+
+.app-image-container img{
+
+width:100%;
+
+border-radius:28px;
+
+box-shadow:
+
+0 20px 60px
+rgba(90,24,77,.08);
+
+}
+
+
+
+/* =========================
+   CARDS
+========================= */
+
+.header,
+.day,
+.contact{
+
+background:var(--card);
+
+border:
+
+1px solid
+var(--border);
+
+border-radius:30px;
+
+padding:30px;
+
+margin-bottom:24px;
+
+box-shadow:var(--shadow);
+
+}
+
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+
+text-align:center;
+
+}
+
+.header h1{
+
+font-size:34px;
+
+font-weight:800;
+
+letter-spacing:-1px;
+
+color:var(--primary);
+
+}
+
+#title{
+
+margin-top:10px;
+
+color:var(--muted);
+
+line-height:1.8;
+
+font-size:15px;
+
+}
+
+
+
+/* =========================
+   DÍAS
+========================= */
+
+.day h2{
+
+font-size:20px;
+
+margin-bottom:24px;
+
+padding-bottom:14px;
+
+color:var(--primary);
+
+border-bottom:
+
+2px solid
+#f6ebf1;
+
+}
+
+
+
+/* =========================
+   ACTIVIDADES
+========================= */
+
+.activity{
+
+display:flex;
+
+gap:18px;
+
+padding:18px 0;
+
+border-bottom:
+
+1px solid
+#f5edf1;
+
+}
+
+.activity:last-child{
+
+border:none;
+
+}
+
+
+
+.activity-time{
+
+min-width:84px;
+
+text-align:center;
+
+background:
+
+linear-gradient(
+135deg,
+#fdf0f7,
+#f7d7e7
+);
+
+color:var(--primary);
+
+padding:10px;
+
+border-radius:14px;
+
+font-weight:700;
+
+}
+
+
+
+.activity-details{
+
+padding-left:18px;
+
+border-left:
+
+2px solid
+rgba(216,122,181,.25);
+
+flex:1;
+
+}
+
+.activity-details strong{
+
+display:block;
+
+font-size:16px;
+
+margin-bottom:6px;
+
+color:var(--text);
+
+}
+
+.activity-details span{
+
+font-size:14px;
+
+color:var(--muted);
+
+line-height:1.6;
+
+}
+
+
+
+/* =========================
+   MAPS
+========================= */
+
+.maps-link{
+
+display:inline-block;
+
+margin-top:10px;
+
+color:var(--primary);
+
+text-decoration:none;
+
+font-weight:700;
+
+transition:.2s;
+
+}
+
+.maps-link:hover{
+
+color:var(--accent);
+
+}
+
+
+
+/* =========================
+   CONTACTO
+========================= */
+
+.contact h3{
+
+margin-bottom:18px;
+
+font-size:18px;
+
+color:var(--primary);
+
+}
+
+
+
+.data_contact{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px 0;
+
+border-bottom:
+
+1px dashed
+#eadde5;
+
+}
+
+.data_contact:last-child{
+
+border:none;
+
+}
+
+
+
+.contact-info-block{
+
+display:flex;
+
+flex-direction:column;
+
+gap:5px;
+
+}
+
+.contact-info-block strong{
+
+font-size:15px;
+
+}
+
+.phone-number{
+
+color:var(--muted);
+
+font-size:14px;
+
+}
+
+
+
+/* =========================
+   WHATSAPP
+========================= */
+
+.whatsapp-btn-small{
+
+background:
+
+linear-gradient(
+135deg,
+var(--primary),
+#733264
+);
+
+color:white;
+
+padding:12px 18px;
+
+border-radius:14px;
+
+text-decoration:none;
+
+font-weight:700;
+
+transition:.25s;
+
+}
+
+.whatsapp-btn-small:hover{
+
+background:
+
+var(--accent);
+
+color:var(--primary);
+
+transform:
+
+translateY(-2px);
+
+}
+
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:640px){
+
+.header,
+.day,
+.contact{
+
+padding:22px;
+
+}
+
+.header h1{
+
+font-size:28px;
+
+}
+
+.login h2{
+
+font-size:32px;
+
+}
+
+.activity{
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+.activity-details{
+
+border-left:none;
+
+padding-left:0;
+
+}
+
+.data_contact{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:14px;
+
+}
+
+.whatsapp-btn-small{
+
+width:100%;
+
+justify-content:center;
+
+}
+
+}
