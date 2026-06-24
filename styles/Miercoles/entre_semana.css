@@ -1,0 +1,128 @@
+/* ==========================================
+   ESTILOS EXCLUSIVOS: PROGRAMA DEL MIÉRCOLES
+   ========================================== */
+
+/* Fondo general de la página de este archivo */
+#miercoles-pagina-layout {
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Barra de navegación superior */
+.miercoles-nav {
+    
+    padding: 20px 0;
+
+    margin-bottom: 25px;
+}
+
+/* Alineación del encabezado */
+.miercoles-header {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+
+.miercoles-titulo {
+ 
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+/* Área central donde van las tarjetas */
+.miercoles-main-contenido {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Contenedor que maneja el espaciado de los datos inyectados */
+.miercoles-bloque-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio exacto entre tarjeta y tarjeta */
+}
+
+/* mensaje temporal si los datos tardan en cargar de la API */
+.miercoles-bloque-datos:empty::after {
+    content: "Cargando el programa de la reunión...";
+    display: block;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 50px 0;
+}
+
+.reunion-contenedor {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* El bloque o tarjeta que representa a un grupo de asignaciones */
+.reunion-tarjeta {
+    background-color: #ffffff;
+    border-left: 5px solid #2a5298; /* Línea azul distintiva a la izquierda */
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efecto al pasar el mouse sobre la tarjeta */
+.reunion-tarjeta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal dentro de la tarjeta (ej: Presidente) */
+.reunion-titulo-principal {
+    color: #1e3c72;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #eef2f5;
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio para un icono si usas Font Awesome */
+}
+
+/* Filas de información (Cantico, Sala B, etc.) */
+.reunion-fila-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed #f0f0f0;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+/* Elimina el borde de puntos en la última fila para que quede limpio */
+.reunion-fila-info:last-child {
+    border-bottom: none;
+}
+
+/* Estilo para las etiquetas de la izquierda (ej: "Sala B:") */
+.reunion-etiqueta {
+    color: #2a5298;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Estilo para los nombres asignados a la derecha */
+.reunion-asignado {
+    color: #333333;
+    font-weight: 500;
+    text-align: right;
+}

@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="../styles/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
-<body>
-    <nav>
+<body class="body_principal">
+    <nav class="nav_principal">
         <div class="header">
                 <h1>Programa Semanal de Salidas y Reuniones</h1>
-                <a href="#" onclick="cargarCarpeta('./reuniones/entre_semana.html')">Reunión entre Semana</a>
+                <a href="#" onclick="cargarCarpeta('./reuniones/entre_semana.html'); cargarDatos();">Reunión entre Semana</a>
                 <a href="#" onclick="cargarCarpeta('./reuniones/fin_semana.html')">Reunión fin de Semana</a>
                 <a href="#" onclick="cargarCarpeta('./predicacion/salidas.html')">Predicación</a>
                 <a href="#" onclick="cargarCarpeta('./login.html')">⚙️</a>
@@ -25,5 +25,6 @@
         </div>
     </main>
     <script src="../scripts/archivos_locales.js"></script>
+    <script src="../../scripts/entre_semana.js"></script>
 </body>
 </html>
