@@ -21,12 +21,21 @@ function cargarCarpeta(rutaArchivos){
 
 
 window.document.addEventListener("DOMContentLoaded", ()=>{
-    const boton = document.getElementById("entre_semana_carpeta")
+    const boton_entre_semana = document.getElementById("entre_semana_carpeta")
+    const boton_login = document.getElementById("login_carpeta")
 
-    if(boton){
-        boton.addEventListener("click", async()=>{
+    if(boton_entre_semana){
+        boton_entre_semana.addEventListener("click", async()=>{
+            // await cargarCarpeta("public/reuniones/entre_semana.html")
             await cargarCarpeta("/reuniones/entre_semana.html")
             EsperaDeDatos()
+        })
+    }
+
+    if(boton_login){
+        boton_login.addEventListener("click", async()=>{
+            // await cargarCarpeta("public/login.html")
+            await cargarCarpeta("/login.html")
         })
     }
 })

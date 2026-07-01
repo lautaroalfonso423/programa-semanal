@@ -54,7 +54,6 @@ async function cargarDatos() {
     }
 }
 
-window.EsperaDeDatos = EsperaDeDatos
 
 async function EsperaDeDatos (){
 
@@ -94,9 +93,10 @@ function Tesoros(data){
 
         contenedor.innerHTML += `
         <div class="reunion-tarjeta">
-            <!-- Encabezado de la Reunión -->
+
+
             <div class="reunion-fecha-encabezado">
-                <span class="reunion-etiqueta-fecha">Fecha:</span> ${element.Fecha ?? ""}
+                <span class="reunion-etiqueta-fecha">Fecha:</span> ${element.Fecha_Tesoros ?? ""}
             </div>
 
             <!-- Introducción y Presidencia -->
@@ -210,7 +210,6 @@ function NuestraVidaCristiana(data){
             </div>
 
             <div class="reunion-bloque-seccion tesoros-seccion">
-
                 <div class="reunion-item-actividad">
 
                     <div class="tesoros-fila-vertical">
@@ -230,7 +229,7 @@ function NuestraVidaCristiana(data){
 
                     <div class="tesoros-fila-vertical">
                         <span class="tesoros-titulo font-bold">${element.Estudio_Biblico ?? "-"}</span>
-                        <span class="tesoros-discursante">${element.Conductor_Lector ?? "-"}</span>
+                        <span class="tesoros-discursante"><span class="reunion-etiqueta">Conductor | Oración:</span> ${element.Conductor_Lector ?? "-"}</span>
                     </div>
 
                 </div>
@@ -255,3 +254,4 @@ function NuestraVidaCristiana(data){
 
 }
 
+window.EsperaDeDatos = EsperaDeDatos
