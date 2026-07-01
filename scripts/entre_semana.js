@@ -54,24 +54,29 @@ async function cargarDatos() {
     }
 }
 
+window.EsperaDeDatos = EsperaDeDatos
+
 async function EsperaDeDatos (){
 
 
     const contenedor = document.getElementById("data_entre_semana")
+    if (!contenedor) {
+        console.warn("El contenedor 'data_entre_semana' aún no está listo en el DOM.");
+        return; 
+    }
     contenedor.insertAdjacentHTML("afterbegin", "<p id='status-mensaje' class='miercoles-cargando'>Cargando la Base de Datos...</p>");
-    
 
     try {
         await cargarDatos()
         const mensaje = document.getElementById("status-mensaje")
-        mensaje.remove()
+        if (mensaje) mensaje.remove();
 
     } catch (error) {
-        throw new Error(error)
         console.log(error)
-    if (contenedor) {
+        if (contenedor) {
             contenedor.innerHTML = "<p class='miercoles-error'>Error al cargar el programa.</p>";
         }
+        throw new Error(error)
     }
 
 }
@@ -250,11 +255,3 @@ function NuestraVidaCristiana(data){
 
 }
 
-
-window.EsperaDeDatos = EsperaDeDatos
-
-if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", window.EsperaDeDatos)
-} else {
-    window.EsperaDeDatos()
-}
