@@ -25,7 +25,7 @@ window.document.addEventListener("DOMContentLoaded", ()=>{
 
     if(boton){
         boton.addEventListener("click", async()=>{
-            await cargarCarpeta("public/reuniones/entre_semana.html")
+            await cargarCarpeta("/reuniones/entre_semana.html")
             EsperaDeDatos()
         })
     }
