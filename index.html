@@ -6,20 +6,22 @@
     <title>Programa Semanal</title>
     <link rel="stylesheet" href="./styles/styles.css">
     <link rel="stylesheet" href="./styles/Miercoles/entre_semana.css">
+     <link rel="stylesheet" href="./styles/Miercoles/fin_semana.css">
     <link rel="stylesheet" href="./styles/login.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
     <script  type="module"  src="./scripts/archivos_locales.js" defer></script>
     <script  type="module"  src="./scripts/entre_semana.js" defer></script>
+    <script  type="module"  src="./scripts/fin_semana.js" defer></script>
 </head>
 <body class="body_principal">
     <nav class="nav_principal">
         <div class="header">
                 <h1>Programa Semanal de Salidas y Reuniones</h1>
                 <a id="entre_semana_carpeta">Reunión entre Semana</a>
-                <a href="#" onclick="cargarCarpeta('./src/reuniones/fin_semana.html')">Reunión fin de Semana</a>
-                <a href="#" onclick="cargarCarpeta('./src/predicacion/salidas.html')">Predicación</a>
+                <a id="fin_semana_carpeta">Reunión fin de Semana</a>
+                <a id="salidas_carpeta">Predicación</a>
                 <a id="login_carpeta">⚙️</a>
         </div>  
     </nav>

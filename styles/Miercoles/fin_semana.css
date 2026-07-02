@@ -1,0 +1,474 @@
+/* ==========================================
+   PÁGINA SÁBADO
+========================================== */
+
+#sabado-pagina-layout{
+
+    margin:0;
+    padding:0;
+
+    background:#f0f4f8;
+
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.sabado-nav{
+
+    padding:20px 0;
+
+    margin-bottom:25px;
+}
+
+.sabado-header{
+
+    width:min(1200px,100%);
+
+    margin:auto;
+
+    padding:0 20px;
+
+    text-align:center;
+}
+
+.sabado-titulo{
+
+    margin:0;
+
+    font-size:1.8rem;
+
+    font-weight:600;
+
+    color:#0b2545;
+}
+
+/* ==========================================
+   CONTENIDO
+========================================== */
+
+.sabado-main{
+
+    width:100%;
+
+    margin:0;
+
+    padding:0;
+}
+
+.sabado-bloque-datos{
+
+    width:100%;
+
+    max-width:1000px;
+
+    margin:auto;
+
+    padding:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+}
+
+
+
+/* ==========================================
+   CONTENEDOR GENERAL
+========================================== */
+
+#data_atalaya{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+    padding:0;
+}
+
+/* ==========================================
+   TARJETA
+========================================== */
+
+.fds-tarjeta-contenedor{
+
+    width:100%;
+
+    background:#fff;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+
+    color:#1f2937;
+
+    transition:.3s;
+}
+
+.fds-tarjeta-contenedor:hover{
+
+    transform:translateY(-3px);
+}
+
+/* ==========================================
+   TEXTOS
+========================================== */
+
+.fds-texto-negrita{
+    font-weight:700;
+}
+
+.fds-etiqueta-gris{
+    color:#6b7280;
+}
+
+/* ==========================================
+   ENCABEZADO
+========================================== */
+
+.fds-encabezado-bloque{
+
+    border-bottom:2px solid #eef2f7;
+
+    padding-bottom:18px;
+
+    margin-bottom:22px;
+}
+
+.fds-meta-fecha{
+
+    font-size:1.2rem;
+
+    color:#2563eb;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+}
+
+.fds-meta-presidente{
+
+    font-size:1rem;
+
+    margin-bottom:16px;
+}
+
+.fds-fila-cantico-inicio{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:#f8fafc;
+
+    padding:12px 16px;
+
+    border-radius:10px;
+}
+
+.fds-valor-resaltado{
+
+    color:#2563eb;
+
+    font-weight:700;
+}
+
+/* ==========================================
+   TITULOS
+========================================== */
+
+.fds-separador-titulo{
+
+    margin:24px 0 14px;
+
+    border-left:5px solid #334155;
+
+    padding-left:12px;
+}
+
+.fds-titulo-actividad{
+
+    font-size:1rem;
+
+    font-weight:700;
+
+    color:#334155;
+
+    letter-spacing:.5px;
+}
+
+/* ==========================================
+   DISCURSO
+========================================== */
+
+.fds-caja-detalles-discurso{
+
+    background:#f8fafc;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+}
+
+.fds-tema-principal{
+
+    font-size:1.1rem;
+
+    line-height:1.5;
+
+    font-weight:700;
+}
+
+.fds-duracion-tiempo{
+
+    color:#dc2626;
+
+    font-size:.9rem;
+}
+
+.fds-etiqueta-orador{
+
+    color:#6b7280;
+
+    font-size:.9rem;
+}
+
+.fds-nombre-orador{
+
+    font-weight:600;
+}
+
+/* ==========================================
+   ATALAYA
+========================================== */
+
+.fds-caja-personal-atalaya{
+
+    background:#f8fafc;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+}
+
+.fds-fila-personal{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:15px;
+}
+
+.fds-rol-atalaya{
+
+    font-weight:600;
+
+    color:#475569;
+}
+
+.fds-nombre-personal{
+
+    text-align:right;
+
+    font-weight:700;
+}
+
+.fds-fila-cantico-medio{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:10px;
+
+    padding-top:10px;
+
+    border-top:1px solid #e5e7eb;
+}
+
+/* ==========================================
+   CIERRE
+========================================== */
+
+.fds-bloque-cierre-reunion{
+
+    margin-top:22px;
+
+    padding-top:18px;
+
+    border-top:2px dashed #d1d5db;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+}
+
+.fds-fila-cierre{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:15px;
+}
+
+.fds-etiqueta-cierre{
+
+    color:#6b7280;
+}
+
+.fds-valor-cierre{
+
+    font-weight:600;
+
+    text-align:right;
+}
+
+.fds-borde-limpieza{
+
+    margin-top:10px;
+
+    padding-top:10px;
+
+    border-top:1px solid #e5e7eb;
+}
+
+.fds-valor-cierre-limpieza{
+
+    color:#2563eb;
+
+    font-weight:700;
+}
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width:900px){
+
+    .sabado-header{
+
+        padding:0 15px;
+    }
+
+    .sabado-bloque-datos{
+
+        max-width:100%;
+
+        padding:0;
+    }
+
+    .fds-tarjeta-contenedor{
+
+        border-radius:12px;
+
+        padding:22px;
+    }
+
+}
+
+/* ==========================================
+   CELULAR
+========================================== */
+
+@media (max-width:768px){
+
+    .sabado-nav{
+
+        margin-bottom:15px;
+    }
+
+    .sabado-header{
+
+        padding:0 10px;
+    }
+
+    .sabado-titulo{
+
+        font-size:1.4rem;
+    }
+
+    .sabado-main{
+
+        padding:0;
+    }
+
+    .sabado-bloque-datos{
+
+        width:100%;
+    }
+
+    #data_atalaya{
+
+        gap:12px;
+    }
+
+    .fds-tarjeta-contenedor{
+
+        border-radius:0;
+
+        border-left:none;
+
+        border-right:none;
+
+        padding:18px;
+    }
+
+    .fds-fila-personal,
+    .fds-fila-cierre,
+    .fds-fila-cantico-inicio,
+    .fds-fila-cantico-medio{
+
+         display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:12px;
+
+    flex-direction:row;
+    }
+
+    .fds-nombre-personal,
+    .fds-valor-cierre{
+
+        text-align:left;
+    }
+}

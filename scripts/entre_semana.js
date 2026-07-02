@@ -1,7 +1,8 @@
+import { ENV } from "../config.js"
 
 async function Tablas(nombre) {
 
-    const SHEET_ID = "1uLNHtuM2fcaaCaIXh5lGy-Im5vou6uItiM8YjgiLmL4"
+    const SHEET_ID = ENV.TABLA_ENTRE_SEMANA
 
     const url =
     `https://opensheet.elk.sh/${SHEET_ID}/${nombre}`
