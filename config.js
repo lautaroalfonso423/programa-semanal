@@ -1,0 +1,4 @@
+export const ENV = {
+    TABLA_FIN_DE_SEMANA: "1El5IpY30c734DF97SVZRC0S5cgLCXyc5oTUXCsg08fg",
+    TABLA_ENTRE_SEMANA: "1uLNHtuM2fcaaCaIXh5lGy-Im5vou6uItiM8YjgiLmL4"
+}
