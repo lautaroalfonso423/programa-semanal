@@ -25,6 +25,29 @@
     text-align: center;
 }
 
+/* Estilo base para el link de Zoom en la cabecera */
+.link {
+    display: inline-block;
+    margin-top: 10px;          /* Lo separa un poco de los títulos */
+    padding: 8px 16px;         /* Espacio interno para que parezca un botón */
+    background-color: #2d8cff; /* El azul oficial de Zoom */
+    color: #ffffff;            /* Texto blanco */
+    text-decoration: none;     /* ¡Adiós a la línea fea! */
+    font-weight: bold;
+    font-size: 0.95rem;
+    border-radius: 6px;        /* Bordes redondeados sutiles */
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Efecto cuando pasas el mouse por encima */
+.link:hover {
+    background-color: #1a73e8; /* Un azul un poco más oscuro */
+}
+
+/* Efecto cuando haces clic */
+.link:active {
+    transform: scale(0.98);    /* Se achica un milímetro al presionarlo */
+}
 .miercoles-titulo{
     margin: 0;
     font-size: 1.8rem;
