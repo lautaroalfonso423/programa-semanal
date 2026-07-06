@@ -121,8 +121,8 @@ function Tesoros(data){
 
             <!-- Bloque de Tesoros de la Biblia -->
             <div class="reunion-bloque-seccion tesoros-seccion">
-                <div class="reunion-subencabezado-icono">
-                    <h4 class="reunion-subtitulo-seccion">💎 TESOROS DE LA BIBLIA</h4>
+                <div class="reunion-titulo-principal">
+                    <h4 class="reunion-subtitulo-seccion"> TESOROS DE LA BIBLIA</h4>
                 </div>
 
                 <div class="reunion-item-actividad">
@@ -178,8 +178,8 @@ function MejoresMaestros(data){
                 <div class="reunion-item-actividad">
                     <div class="tesoros-fila-vertical">
                         <span class="tesoros-titulo font-bold">${element.Titulo ?? "-"} <span class="reunion-tiempo">(${element.Tiempo ?? "-"} mins.)</span></span>
-                        <span class="tesoros-discursante">${element.Asignados_SalaA ?? "-"}</span>
-                        <span class="tesoros-discursante">${element.Asignados_SalaB ?? "-"}</span>
+                        <span class="tesoros-discursante"><span class="reunion-etiqueta">Sala A:</span> ${element.Asignados_SalaA ?? "-"}</span>
+                        <span class="tesoros-discursante"><span class="reunion-etiqueta">Sala B:</span> ${element.Asignados_SalaB ?? "-"}</span>
                     </div>
                 </div>
             </div>
@@ -230,7 +230,7 @@ function NuestraVidaCristiana(data){
 
                     <div class="tesoros-fila-vertical">
                         <span class="tesoros-titulo font-bold">${element.Estudio_Biblico ?? "-"}</span>
-                        <span class="tesoros-discursante"><span class="reunion-etiqueta">Conductor | Oración:</span> ${element.Conductor_Lector ?? "-"}</span>
+                        <span class="tesoros-discursante"><span class="reunion-etiqueta">Conductor | Lector:</span> ${element.Conductor_Lector ?? "-"}</span>
                     </div>
 
                 </div>

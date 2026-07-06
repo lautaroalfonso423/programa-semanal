@@ -28,8 +28,8 @@ window.document.addEventListener("DOMContentLoaded", ()=>{
     
     if(boton_entre_semana){
         boton_entre_semana.addEventListener("click", async()=>{
-            // await cargarCarpeta("public/reuniones/entre_semana.html")
-            await cargarCarpeta("/reuniones/entre_semana.html")
+            await cargarCarpeta("public/reuniones/entre_semana.html")
+            // await cargarCarpeta("/reuniones/entre_semana.html")
             EsperaDeDatos()
         })
     }
@@ -43,16 +43,16 @@ window.document.addEventListener("DOMContentLoaded", ()=>{
 
     if(boton_fin_de_semana){
         boton_fin_de_semana.addEventListener("click", async()=>{
-            await cargarCarpeta("/reuniones/fin_semana.html")
-            // await cargarCarpeta("public/reuniones/fin_semana.html")
+            // await cargarCarpeta("/reuniones/fin_semana.html")
+            await cargarCarpeta("public/reuniones/fin_semana.html")
             EsperaDeDatosAtalaya()
         })
     }
 
     if(boton_salida){
         boton_salida.addEventListener("click", async()=>{
-            await cargarCarpeta("/predicacion/salidas.html")
-            // await cargarCarpeta("public/predicacion/salidas.html")
+            // await cargarCarpeta("/predicacion/salidas.html")
+            await cargarCarpeta("public/predicacion/salidas.html")
             EsperaDeDatosSalidas()
         })
     }
