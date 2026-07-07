@@ -1,7 +1,3 @@
-/* ===========================
-   CONFIGURACIÓN GENERAL
-=========================== */
-
 *{
     margin:0;
     padding:0;
@@ -17,7 +13,7 @@
 }
 
 /* ===========================
-   CONTENIDO
+    CONTENIDO
 =========================== */
 
 .salidas-main-contenido{
@@ -35,6 +31,7 @@
     max-width:1300px;
     margin:auto;
 }
+
 /* ===========================
     TARJETA (Neubrutalismo)
 =========================== */
@@ -58,8 +55,8 @@
     ENCABEZADO
 =========================== */
 .evento-header {
-    background: #fde047; /* Amarillo brillante llamativo */
-    color: #0f172a;
+    background: #193462; 
+    color: #ffffff;
     padding: 20px 24px;
     display: flex;
     justify-content: space-between;
@@ -71,7 +68,7 @@
     font-size: 1.4rem;
     font-weight: 900; /* Tipografía muy pesada */
     text-transform: uppercase;
-    color: #0f172a;
+    color: #ebebeb;
 }
 
 .etiqueta-hora {
@@ -101,7 +98,7 @@
     align-items: flex-start;
     gap: 15px;
     padding: 13px 0;
-    border-bottom: 2px dashed #cbd5e1; /* Línea discontinua tipo cupón */
+    border-bottom: 2px dashed #cbd5e1; 
     line-height: 1.6;
 }
 
