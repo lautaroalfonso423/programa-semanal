@@ -88,7 +88,7 @@ async function Salida_Vista(data) {
                         </p>                        
                         <p><strong>Información:</strong> ${element.Dato_Adicional}</p>
                         <p><strong>Conductor:</strong> ${element.Conductor || ""}</p>
-                        <p><strong>Territorio:</strong> ${element.Territorio || ""}</p>
+                        <p><strong>Territorio:</strong>  <a href="${element.Link_del_Terrirotorio || ""}" target="_blank" >${element.Territorio || ""}</a></p>
                     </div>
                     ${zoom ? 
                         `
