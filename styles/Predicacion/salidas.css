@@ -1,35 +1,36 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-#salidas-pagina-layout{
-    min-height:100vh;
-    background:#eef2f6;
-    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-    display:flex;
-    flex-direction:column;
+#salidas-pagina-layout {
+    min-height: 100vh;
+    background: #eef2f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
 /* ===========================
     CONTENIDO
 =========================== */
 
-.salidas-main-contenido{
-    flex:1;
-    width:100%;
-    max-width:1300px;
-    margin:auto;
-    padding:35px 20px;
+.salidas-main-contenido {
+    flex: 1;
+    width: 100%;
+    max-width: 1300px;
+    margin: auto;
+    padding: 35px 20px;
 }
 
-#contenedor_salidas{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(420px, 1fr));
-    gap:24px;
-    max-width:1300px;
-    margin:auto;
+#contenedor_salidas_generales,
+#contenedor_salidas_grupales {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 24px;
+    max-width: 1300px;
+    margin: auto;
 }
 
 /* ===========================
@@ -41,21 +42,21 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    border: 3px solid #0f172a; /* Borde negro grueso */
-    box-shadow: 6px 6px 0px #0f172a; /* Sombra sólida y rígida */
+    border: 3px solid #0f172a;
+    box-shadow: 6px 6px 0px #0f172a;
     transition: all .2s ease;
 }
 
 .tarjeta-evento:hover {
-    transform: translate(-2px, -2px); /* Se mueve ligeramente hacia arriba a la izquierda */
-    box-shadow: 9px 9px 0px #2563eb; /* La sombra se vuelve azul y más grande */
+    transform: translate(-2px, -2px);
+    box-shadow: 9px 9px 0px #2563eb;
 }
 
 /* ===========================
     ENCABEZADO
 =========================== */
 .evento-header {
-    background: #193462; 
+    background: #193462;
     color: #ffffff;
     padding: 20px 24px;
     display: flex;
@@ -66,7 +67,7 @@
 
 .etiqueta-dia {
     font-size: 1.4rem;
-    font-weight: 900; /* Tipografía muy pesada */
+    font-weight: 900;
     text-transform: uppercase;
     color: #ebebeb;
 }
@@ -76,9 +77,10 @@
     color: #fff;
     padding: 6px 14px;
     border: 2px solid #0f172a;
-    border-radius: 4px; /* Cuadrada en vez de redonda */
+    border-radius: 4px;
     font-size: .95rem;
     font-weight: 700;
+    white-space: nowrap; /* Evita que la hora se divida en varias líneas */
 }
 
 /* ===========================
@@ -94,12 +96,14 @@
 
 .evento-cuerpo p {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start; /* Cambiado de space-between a flex-start */
     align-items: flex-start;
     gap: 15px;
     padding: 13px 0;
-    border-bottom: 2px dashed #cbd5e1; 
+    border-bottom: 2px dashed #cbd5e1;
     line-height: 1.6;
+    word-wrap: break-word; /* Permite que el texto largo se rompa */
+    overflow-wrap: break-word;
 }
 
 .evento-cuerpo p:last-child {
@@ -110,6 +114,11 @@
     color: #0f172a;
     font-weight: 800;
     min-width: 95px;
+    flex-shrink: 0; /* Evita que el strong se encoja */
+}
+
+.evento-cuerpo a {
+    word-break: break-all; /* Rompe URLs largas */
 }
 
 /* ===========================
@@ -117,8 +126,9 @@
 =========================== */
 .link-mapa {
     color: inherit;
-    text-decoration: underline; /* Subrayado marcado */
+    text-decoration: underline;
     font-weight: 600;
+    word-break: break-word;
 }
 
 .link-mapa:hover {
@@ -138,7 +148,7 @@
     display: block;
     width: 100%;
     text-align: center;
-    background: #2563eb; /* Azul brillante */
+    background: #2563eb;
     color: #fff;
     text-decoration: none;
     padding: 13px;
@@ -156,142 +166,236 @@
 }
 
 /* ===========================
-   TABLETS
+    RESPONSIVE - TABLETS
 =========================== */
 
-@media (max-width:768px){
-
-    .salidas-main-contenido{
-        padding:20px 15px;
+@media (max-width: 768px) {
+    .salidas-main-contenido {
+        padding: 20px 15px;
     }
 
-    #contenedor_salidas{
-        grid-template-columns:1fr;
-        gap:20px;
+    #contenedor_salidas_generales,
+    #contenedor_salidas_grupales {
+        grid-template-columns: 1fr; /* Una sola columna en tablets */
+        gap: 20px;
     }
 
-    .evento-header{
-        padding:18px 20px;
+    .evento-header {
+        padding: 18px 20px;
+        flex-direction: row; /* Mantener horizontal en tablets */
+        justify-content: space-between;
     }
 
-    .evento-cuerpo{
-        padding:20px;
+    .evento-cuerpo {
+        padding: 20px;
     }
 
-    .evento-footer{
-        padding:18px 20px;
+    .evento-footer {
+        padding: 18px 20px;
     }
-
+    
+    .evento-cuerpo p {
+        flex-direction: row;
+        gap: 12px;
+    }
 }
 
 /* ===========================
-   CELULARES
+    RESPONSIVE - CELULARES (CORREGIDO)
 =========================== */
 
-@media (max-width:480px){
-
-    .salidas-main-contenido{
-        padding:15px 12px;
+@media (max-width: 480px) {
+    .salidas-main-contenido {
+        padding: 12px 10px;
     }
 
-    .tarjeta-evento{
-        border-radius:14px;
+    #contenedor_salidas_generales,
+    #contenedor_salidas_grupales {
+        grid-template-columns: 1fr; /* Una sola columna */
+        gap: 16px;
     }
 
-    .evento-header{
-        flex-direction:column;
+    .tarjeta-evento {
+        border-radius: 10px;
+        border-width: 2px;
+        box-shadow: 4px 4px 0px #0f172a;
+    }
+
+        .evento-header {
+        flex-direction: row; /* FORZADO: SIEMPRE HORIZONTAL */
+        justify-content: space-between; /* Mantiene separación */
         align-items: center;
-        gap:12px;
-
-  
+        padding: 14px 16px;
+        gap: 8px;
+        flex-wrap: wrap; /* Si no caben, se envuelven */
+    }
+    .etiqueta-dia {
+        font-size: 1.1rem;
     }
 
-    .etiqueta-dia{
-        font-size:1.25rem;
+    .etiqueta-hora {
+        font-size: 0.85rem;
+        padding: 4px 12px;
+        white-space: nowrap;
     }
 
-    .etiqueta-hora{
-        font-size:.95rem;
-        padding:8px 14px;
+    .evento-cuerpo {
+        padding: 14px 16px;
+        font-size: 0.9rem;
     }
 
-    .evento-cuerpo{
-        padding:18px;
+    .evento-cuerpo p {
+        flex-direction: column; /* Apilar verticalmente en celulares */
+        align-items: flex-start;
+        gap: 4px;
+        padding: 10px 0;
+        text-align: left; /* Alinear a la izquierda */
     }
 
-    .evento-cuerpo p{
-      display: flex;             
-        flex-direction: row;      
-        justify-content: center;   
-        align-items: center;     
-        flex-wrap: wrap;         
-        gap: 5px;
-        font-size: .95rem;
-        text-align: center;
+    .evento-cuerpo strong {
+        min-width: auto;
+        font-size: 0.85rem;
+        width: 100%;
+        display: block;
     }
 
-    .evento-cuerpo strong{
-        min-width:auto;
+    .evento-cuerpo a {
+        font-size: 0.85rem;
+        word-break: break-all;
     }
 
-    .btn-zoom{
-        padding:12px;
-        font-size:.95rem;
+    /* Enlaces de ubicación y territorio */
+    .evento-cuerpo .dato-ubicacion {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
+    .evento-footer {
+        padding: 14px 16px;
+    }
+
+    .btn-zoom {
+        padding: 12px;
+        font-size: 0.9rem;
+        border-width: 2px;
+        box-shadow: 3px 3px 0px #0f172a;
+    }
+
+    .btn-zoom:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: 4px 4px 0px #0f172a;
+    }
+
+    /* Ajuste para enlaces dentro del cuerpo */
+    .link-mapa {
+        display: inline-block;
+        width: 100%;
+        word-break: break-word;
+    }
 }
 
 /* ===========================
-   COMPUTADORAS
+    RESPONSIVE - CELULARES PEQUEÑOS
 =========================== */
 
-@media (min-width:1024px){
-
-    /* Contenedor principal */
-    .salidas-main-contenido{
-        max-width:2600px;
-        padding:50px 40px;
+@media (max-width: 360px) {
+    .salidas-main-contenido {
+        padding: 8px 6px;
     }
 
-
-    /* Encabezado */
-    .evento-header{
-        padding:28px 32px;
+        .evento-header {
+        flex-direction: row; /* FORZADO: SIEMPRE HORIZONTAL */
+        justify-content: space-between; /* Mantiene separación */
+        align-items: center;
+        padding: 14px 16px;
+        gap: 8px;
+        flex-wrap: wrap; /* Si no caben, se envuelven */
     }
 
-    .etiqueta-dia{
-        font-size:2rem;
+    .etiqueta-dia {
+        font-size: 0.95rem;
     }
 
-    .etiqueta-hora{
-        font-size:1.15rem;
-        padding:10px 20px;
+    .etiqueta-hora {
+        font-size: 0.75rem;
+        padding: 3px 10px;
     }
 
-    /* Cuerpo */
-    .evento-cuerpo{
-        padding:30px 32px;
-        font-size:1.15rem;
+    .evento-cuerpo {
+        padding: 10px 12px;
+        font-size: 0.8rem;
     }
 
-    .evento-cuerpo p{
-        padding:18px 0;
-        gap:24px;
+    .evento-cuerpo p {
+        padding: 8px 0;
+        gap: 2px;
     }
 
-    .evento-cuerpo strong{
-        min-width:130px;
-        font-size:1.15rem;
+    .evento-cuerpo strong {
+        font-size: 0.8rem;
     }
 
-    /* Footer */
-    .evento-footer{
-        padding:24px 32px;
+    .btn-zoom {
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ===========================
+    RESPONSIVE - COMPUTADORAS
+=========================== */
+
+@media (min-width: 1024px) {
+    .salidas-main-contenido {
+        max-width: 1400px;
+        padding: 50px 40px;
     }
 
-    .btn-zoom{
-        padding:16px;
-        font-size:1.1rem;
+    #contenedor_salidas_generales,
+    #contenedor_salidas_grupales {
+        grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+        gap: 28px;
     }
 
+       .evento-header {
+        flex-direction: row; /* FORZADO: SIEMPRE HORIZONTAL */
+        justify-content: space-between; /* Mantiene separación */
+        align-items: center;
+        padding: 14px 16px;
+        gap: 8px;
+        flex-wrap: wrap; /* Si no caben, se envuelven */
+    }
+
+    .etiqueta-dia {
+        font-size: 2rem;
+    }
+
+    .etiqueta-hora {
+        font-size: 1.15rem;
+        padding: 10px 20px;
+    }
+
+    .evento-cuerpo {
+        padding: 30px 32px;
+        font-size: 1.15rem;
+    }
+
+    .evento-cuerpo p {
+        padding: 18px 0;
+        gap: 24px;
+    }
+
+    .evento-cuerpo strong {
+        min-width: 130px;
+        font-size: 1.15rem;
+    }
+
+    .evento-footer {
+        padding: 24px 32px;
+    }
+
+    .btn-zoom {
+        padding: 16px;
+        font-size: 1.1rem;
+    }
 }
