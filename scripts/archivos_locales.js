@@ -25,13 +25,14 @@ window.document.addEventListener("DOMContentLoaded", () => {
     const boton_login = document.getElementById("login_carpeta")
     const boton_fin_de_semana = document.getElementById("fin_semana_carpeta")
     const boton_salida = document.getElementById("salidas_carpeta")
-    // const ruta = "public"
+    // const ruta = "public/"
+    const ruta = "/"
     
     if(boton_entre_semana){
         boton_entre_semana.addEventListener("click", async() => {
             // await cargarCarpeta("/reuniones/entre_semana.html")
      
-                await cargarCarpeta(`${ruta}/reuniones/entre_semana.html`)
+                await cargarCarpeta(`${ruta}reuniones/entre_semana.html`)
             EsperaDeDatos()
         })
     }
@@ -40,7 +41,7 @@ window.document.addEventListener("DOMContentLoaded", () => {
         boton_login.addEventListener("click", async() => {
             // await cargarCarpeta("/login.html")
          
-                await cargarCarpeta(`${ruta}/login.html`)
+                await cargarCarpeta(`${ruta}login.html`)
             
         })
     }
@@ -49,7 +50,7 @@ window.document.addEventListener("DOMContentLoaded", () => {
         boton_fin_de_semana.addEventListener("click", async() => {
                 
                 // await cargarCarpeta("/reuniones/fin_semana.html")
-                await cargarCarpeta(`${ruta}/reuniones/fin_semana.html`)
+                await cargarCarpeta(`${ruta}reuniones/fin_semana.html`)
             
                 EsperaDeDatosAtalaya()
         })
@@ -59,7 +60,7 @@ window.document.addEventListener("DOMContentLoaded", () => {
         boton_salida.addEventListener("click", async() => {
 
             // await cargarCarpeta("/predicacion/salidas.html");
-            await cargarCarpeta(`${ruta}/predicacion/salidas.html`) 
+            await cargarCarpeta(`${ruta}predicacion/salidas.html`) 
             EsperaDeDatosSalidas();
         })
     }
