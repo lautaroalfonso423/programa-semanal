@@ -24,7 +24,7 @@
     padding: 35px 20px;
 }
 
-#contenedor_salidas_generales {
+#contenedor_salidas_grupales {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
     gap: 24px;
@@ -35,7 +35,7 @@
 /* ===========================
     TARJETA (Neubrutalismo)
 =========================== */
-.tarjeta-evento {
+.tarjeta-evento-grupo {
     background: #ffffff;
     border-radius: 12px;
     overflow: hidden;
@@ -46,7 +46,7 @@
     transition: all .2s ease;
 }
 
-.tarjeta-evento:hover {
+.tarjeta-evento-grupo:hover {
     transform: translate(-2px, -2px);
     box-shadow: 6px 6px 6px #28344e;
 }
@@ -54,9 +54,9 @@
 /* ===========================
     ENCABEZADO
 =========================== */
-.evento-header {
-    background: #074717;
-    color: #ffffff;
+.evento-header-grupo {
+    background: #32adff;
+    color: #fffdfd;
     padding: 20px 24px;
     display: flex;
     justify-content: space-between;
@@ -64,28 +64,28 @@
     border-bottom: 3px solid #0f172a;
 }
 
-.etiqueta-dia {
+.etiqueta-dia-grupo {
     font-size: 1.4rem;
     font-weight: 900;
     text-transform: uppercase;
-    color: #fffcfc;
+    color: #030303;
 }
 
-.etiqueta-hora {
-    background: #000000;
-    color: #fff8f8;
+.etiqueta-hora-grupo {
+    background: #0f172a;
+    color: #fff;
     padding: 6px 14px;
-    border: 2px solid #000000;
+    border: 2px solid #0f172a;
     border-radius: 4px;
     font-size: .95rem;
     font-weight: 700;
-    white-space: nowrap; /* Evita que la hora se divida en varias líneas */
+    white-space: nowrap;
 }
 
 /* ===========================
     CUERPO
 =========================== */
-.evento-cuerpo {
+.evento-cuerpo-grupo {
     flex: 1;
     padding: 22px;
     color: #0f172a;
@@ -93,61 +93,61 @@
     background: #fff;
 }
 
-.evento-cuerpo p {
+.evento-cuerpo-grupo p {
     display: flex;
-    justify-content: flex-start; /* Cambiado de space-between a flex-start */
+    justify-content: flex-start;
     align-items: flex-start;
     gap: 15px;
     padding: 13px 0;
     border-bottom: 2px dashed #cbd5e1;
     line-height: 1.6;
-    word-wrap: break-word; /* Permite que el texto largo se rompa */
+    word-wrap: break-word;
     overflow-wrap: break-word;
 }
 
-.evento-cuerpo p:last-child {
+.evento-cuerpo-grupo p:last-child {
     border-bottom: none;
 }
 
-.evento-cuerpo strong {
+.evento-cuerpo-grupo strong {
     color: #0f172a;
     font-weight: 800;
     min-width: 95px;
-    flex-shrink: 0; /* Evita que el strong se encoja */
+    flex-shrink: 0;
 }
 
-.evento-cuerpo a {
-    word-break: break-all; /* Rompe URLs largas */
+.evento-cuerpo-grupo a {
+    word-break: break-all;
 }
 
 /* ===========================
     ENLACE MAPA
 =========================== */
-.link-mapa {
+.link-mapa-grupo {
     color: inherit;
     text-decoration: underline;
     font-weight: 600;
     word-break: break-word;
 }
 
-.link-mapa:hover {
+.link-mapa-grupo:hover {
     color: #2563eb;
 }
 
 /* ===========================
     FOOTER
 =========================== */
-.evento-footer {
+.evento-footer-grupo {
     padding: 20px 22px;
     background: #fff;
     border-top: 3px solid #0f172a;
 }
 
-.btn-zoom {
+.btn-zoom-grupo {
     display: block;
     width: 100%;
     text-align: center;
-    background: #074717;
+    background: #2563eb;
     color: #fff;
     text-decoration: none;
     padding: 13px;
@@ -158,7 +158,7 @@
     transition: .15s ease;
 }
 
-.btn-zoom:hover {
+.btn-zoom-grupo:hover {
     background: #3b82f6;
     transform: translate(-1px, -1px);
     box-shadow: 4px 4px 0px #0f172a;
@@ -175,32 +175,32 @@
 
     #contenedor_salidas_generales,
     #contenedor_salidas_grupales {
-        grid-template-columns: 1fr; /* Una sola columna en tablets */
+        grid-template-columns: 1fr;
         gap: 20px;
     }
 
-    .evento-header {
+    .evento-header-grupo {
         padding: 18px 20px;
-        flex-direction: row; /* Mantener horizontal en tablets */
+        flex-direction: row;
         justify-content: space-between;
     }
 
-    .evento-cuerpo {
+    .evento-cuerpo-grupo {
         padding: 20px;
     }
 
-    .evento-footer {
+    .evento-footer-grupo {
         padding: 18px 20px;
     }
     
-    .evento-cuerpo p {
+    .evento-cuerpo-grupo p {
         flex-direction: row;
         gap: 12px;
     }
 }
 
 /* ===========================
-    RESPONSIVE - CELULARES (CORREGIDO)
+    RESPONSIVE - CELULARES
 =========================== */
 
 @media (max-width: 480px) {
@@ -210,83 +210,82 @@
 
     #contenedor_salidas_generales,
     #contenedor_salidas_grupales {
-        grid-template-columns: 1fr; /* Una sola columna */
+        grid-template-columns: 1fr;
         gap: 16px;
     }
 
-    .tarjeta-evento {
+    .tarjeta-evento-grupo {
         border-radius: 10px;
         border-width: 2px;
         box-shadow: 4px 4px 0px #0f172a;
     }
 
-        .evento-header {
-        flex-direction: row; /* FORZADO: SIEMPRE HORIZONTAL */
-        justify-content: space-between; /* Mantiene separación */
+    .evento-header-grupo {
+        flex-direction: row;
+        justify-content: space-between;
         align-items: center;
         padding: 14px 16px;
         gap: 8px;
-        flex-wrap: wrap; /* Si no caben, se envuelven */
+        flex-wrap: wrap;
     }
-    .etiqueta-dia {
+
+    .etiqueta-dia-grupo {
         font-size: 1.1rem;
     }
 
-    .etiqueta-hora {
+    .etiqueta-hora-grupo {
         font-size: 0.85rem;
         padding: 4px 12px;
         white-space: nowrap;
     }
 
-    .evento-cuerpo {
+    .evento-cuerpo-grupo {
         padding: 14px 16px;
         font-size: 0.9rem;
     }
 
-    .evento-cuerpo p {
-        flex-direction: column; /* Apilar verticalmente en celulares */
+    .evento-cuerpo-grupo p {
+        flex-direction: column;
         align-items: flex-start;
         gap: 4px;
         padding: 10px 0;
-        text-align: left; /* Alinear a la izquierda */
+        text-align: left;
     }
 
-    .evento-cuerpo strong {
+    .evento-cuerpo-grupo strong {
         min-width: auto;
         font-size: 0.85rem;
         width: 100%;
         display: block;
     }
 
-    .evento-cuerpo a {
+    .evento-cuerpo-grupo a {
         font-size: 0.85rem;
         word-break: break-all;
     }
 
-    /* Enlaces de ubicación y territorio */
-    .evento-cuerpo .dato-ubicacion {
+    .evento-cuerpo-grupo .dato-ubicacion-grupo {
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .evento-footer {
+    .evento-footer-grupo {
         padding: 14px 16px;
     }
 
-    .btn-zoom {
+    .btn-zoom-grupo {
         padding: 12px;
         font-size: 0.9rem;
         border-width: 2px;
         box-shadow: 3px 3px 0px #0f172a;
     }
 
-    .btn-zoom:hover {
+    .btn-zoom-grupo:hover {
         transform: translate(-1px, -1px);
         box-shadow: 4px 4px 0px #0f172a;
     }
 
-    /* Ajuste para enlaces dentro del cuerpo */
-    .link-mapa {
+    .link-mapa-grupo {
         display: inline-block;
         width: 100%;
         word-break: break-word;
@@ -302,39 +301,39 @@
         padding: 8px 6px;
     }
 
-        .evento-header {
-        flex-direction: row; /* FORZADO: SIEMPRE HORIZONTAL */
-        justify-content: space-between; /* Mantiene separación */
+    .evento-header-grupo {
+        flex-direction: row;
+        justify-content: space-between;
         align-items: center;
         padding: 14px 16px;
         gap: 8px;
-        flex-wrap: wrap; /* Si no caben, se envuelven */
+        flex-wrap: wrap;
     }
 
-    .etiqueta-dia {
+    .etiqueta-dia-grupo {
         font-size: 0.95rem;
     }
 
-    .etiqueta-hora {
+    .etiqueta-hora-grupo {
         font-size: 0.75rem;
         padding: 3px 10px;
     }
 
-    .evento-cuerpo {
+    .evento-cuerpo-grupo {
         padding: 10px 12px;
         font-size: 0.8rem;
     }
 
-    .evento-cuerpo p {
+    .evento-cuerpo-grupo p {
         padding: 8px 0;
         gap: 2px;
     }
 
-    .evento-cuerpo strong {
+    .evento-cuerpo-grupo strong {
         font-size: 0.8rem;
     }
 
-    .btn-zoom {
+    .btn-zoom-grupo {
         padding: 10px;
         font-size: 0.8rem;
     }
@@ -356,44 +355,44 @@
         gap: 28px;
     }
 
-       .evento-header {
-        flex-direction: row; /* FORZADO: SIEMPRE HORIZONTAL */
-        justify-content: space-between; /* Mantiene separación */
+    .evento-header-grupo {
+        flex-direction: row;
+        justify-content: space-between;
         align-items: center;
         padding: 14px 16px;
         gap: 8px;
-        flex-wrap: wrap; /* Si no caben, se envuelven */
+        flex-wrap: wrap;
     }
 
-    .etiqueta-dia {
+    .etiqueta-dia-grupo {
         font-size: 2rem;
     }
 
-    .etiqueta-hora {
+    .etiqueta-hora-grupo {
         font-size: 1.15rem;
         padding: 10px 20px;
     }
 
-    .evento-cuerpo {
+    .evento-cuerpo-grupo {
         padding: 30px 32px;
         font-size: 1.15rem;
     }
 
-    .evento-cuerpo p {
+    .evento-cuerpo-grupo p {
         padding: 18px 0;
         gap: 24px;
     }
 
-    .evento-cuerpo strong {
+    .evento-cuerpo-grupo strong {
         min-width: 130px;
         font-size: 1.15rem;
     }
 
-    .evento-footer {
+    .evento-footer-grupo {
         padding: 24px 32px;
     }
 
-    .btn-zoom {
+    .btn-zoom-grupo {
         padding: 16px;
         font-size: 1.1rem;
     }

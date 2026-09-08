@@ -144,35 +144,35 @@ async function Salida_Vista_Grupales(data) {
             if(dias_de_semana.includes(element.Dia)){
                 const zoom = element.Link_de_Zoom; 
                 contenedor.innerHTML += `
-                <div class="tarjeta-evento">
-                    <div class="evento-header">
-                        <span class="etiqueta-dia">${element.Dia || ""}</span>
-                        <span class="etiqueta-hora">${element.Hora || ""}</span>
+                <div class="tarjeta-evento-grupo">
+                    <div class="evento-header-grupo">
+                        <span class="etiqueta-dia-grupo">${element.Dia || ""}</span>
+                        <span class="etiqueta-hora-grupo">${element.Hora || ""}</span>
                     </div>
-                    <div class="evento-cuerpo">
-                        <p class="dato-ubicacion">
-                            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(element.Ubicacion || '')}" target="_blank" class="link-mapa">
+                    <div class="evento-cuerpo-grupo">
+                        <p class="dato-ubicacion-grupo">
+                            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(element.Ubicacion || '')}" target="_blank" class="link-mapa-grupo">
                                 <strong>Ubicación:</strong> ${element.Ubicacion || ""}
                             </a>
                         </p>                        
-                        <p><strong>Información:</strong> ${element.Dato_Adicional}</p>
+                        <p><strong>Información:</strong> ${element.Dato_Adicional || ""}</p>
                         <p><strong>Conductor:</strong> ${element.Conductor || ""}</p>
-                        <p><strong>Territorio Principal:</strong>  <a href="${element.Link_del_Terrirotorio || ""}" target="_blank" >${element.Territorio || ""}</a></p>
-                        <p><strong>Territorio Secundario:</strong>  <a target="_blank" >${element.Territorio_Secundario || ""}</a></p>
+                        <p><strong>Territorio Principal:</strong> <a href="${element.Link_del_Terrirotorio || ""}" target="_blank">${element.Territorio || ""}</a></p>
+                        <p><strong>Territorio Secundario:</strong>${element.Territorio_Secundario || ""}</p>
                     </div>
                     ${zoom ? 
                         `
-                        <div class="evento-footer">
-                        <a href="${element.Link_de_Zoom || ""}" target="_blank" class="btn-zoom">Unirse a Zoom</a>
+                        <div class="evento-footer-grupo">
+                            <a href="${element.Link_de_Zoom || ""}" target="_blank" class="btn-zoom-grupo">Unirse a Zoom</a>
                         </div>
                         `
                         : ""
                     } 
-                    
                 </div>
-            `;
+                `;
             }
         });  
+
     
     }
 
