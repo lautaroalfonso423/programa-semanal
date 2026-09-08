@@ -25,8 +25,8 @@ window.document.addEventListener("DOMContentLoaded", () => {
     const boton_login = document.getElementById("login_carpeta")
     const boton_fin_de_semana = document.getElementById("fin_semana_carpeta")
     const boton_salida = document.getElementById("salidas_carpeta")
-    const ruta = "public/"
-    // const ruta = "/"
+    // const ruta = "public/"
+    const ruta = "/"
     
     if(boton_entre_semana){
         boton_entre_semana.addEventListener("click", async() => {
