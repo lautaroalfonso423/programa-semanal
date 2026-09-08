@@ -159,7 +159,7 @@
 }
 
 .btn-zoom:hover {
-    background: #3b82f6;
+    background: #0c992f;
     transform: translate(-1px, -1px);
     box-shadow: 4px 4px 0px #0f172a;
 }
