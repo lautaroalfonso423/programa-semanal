@@ -71,7 +71,20 @@ async function EsperaDeDatosSalidas(){
 async function Salida_Vista(data) {
         const contenedor = document.getElementById("contenedor_salidas_generales")
 
-        const dias_de_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado", "Domigno"]
+        const dias_de_semana = [
+            "Lunes Tarde", 
+            "Martes Mañana", 
+            "Martes Tarde", 
+            "Miércoles Mañana", 
+            "Jueves Mañana", 
+            "Jueves Tarde", 
+            "Viernes Mañana", 
+            "Viernes Tarde", 
+            "Sabado Mañana", 
+            "Sabado Tarde", 
+        ]
+
+
 
 
         data.forEach(element => {
@@ -113,7 +126,18 @@ async function Salida_Vista(data) {
 async function Salida_Vista_Grupales(data) {
         const contenedor = document.getElementById("contenedor_salidas_grupales")
 
-        const dias_de_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado", "Domigno"]
+        const dias_de_semana = [
+            "Lunes Tarde", 
+            "Martes Mañana", 
+            "Martes Tarde", 
+            "Miércoles Mañana", 
+            "Jueves Mañana", 
+            "Jueves Tarde", 
+            "Viernes Mañana", 
+            "Viernes Tarde", 
+            "Sabado Mañana", 
+            "Sabado Tarde", 
+        ]
 
 
         data.forEach(element => {
