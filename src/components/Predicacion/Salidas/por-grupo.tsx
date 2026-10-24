@@ -64,7 +64,7 @@ export default function PorGrupo() {
 
         if (rawLink.includes(",") && !isNaN(parseFloat(rawLink.split(",")[0]))) {
             const coords = rawLink.replace(/\s+/g, "")
-            newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ll=${coords}&z=19`
+            newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ll=${coords}&z=18`
         } else if (rawTerritorio) {
             newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&q=${encodeURIComponent(rawTerritorio)}`
         }
