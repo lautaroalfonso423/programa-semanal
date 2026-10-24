@@ -129,14 +129,16 @@ export default function PorGrupo() {
                             </p>
                             <p>
                                 <strong className="font-bold text-slate-900 dark:text-zinc-100">Territorio Principal:</strong>{" "}
-                                <a
-                                    href={`https://www.google.com/maps/d/viewer?mid=12e40jLmRQSPotpgZ-W8V77N3fp_YH6k&ll=${element.Link_del_Terrirotorio || ""}&z=18`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
+                                <button
+                                    onClick={() => {
+                                        const coords = (element.Link_del_Terrirotorio || "");
+                                        const url = `https://www.google.com/maps/d/viewer?mid=12e40jLmRQSPotpgZ-W8V77N3fp_YH6k&ll=${coords}&z=19`;
+                                        window.open(url, "_blank", "noopener,noreferrer");
+                                    }}
+                                    className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium bg-transparent border-none p-0 cursor-pointer text-left inline"
                                 >
                                     {element.Territorio || "Ver Territorio"}
-                                </a>
+                                </button>
                             </p>
                         </div>
 
