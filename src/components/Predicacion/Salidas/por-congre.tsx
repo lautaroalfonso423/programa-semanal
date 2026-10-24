@@ -53,24 +53,27 @@ export default function PorCongre() {
         cargarDatos()
     }, [])
 
-    // Función para actualizar el mapa en pantalla al hacer clic
+    // Función para actualizar la vista y hacer scroll automático hacia arriba
     const handleSelectTerritory = (territorioVal: string, linkVal: string) => {
         const rawLink = (linkVal || "").trim()
         const rawTerritorio = (territorioVal || "").trim()
 
         let newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F`
 
-        // Si el valor es una coordenada
         if (rawLink.includes(",") && !isNaN(parseFloat(rawLink.split(",")[0]))) {
             const coords = rawLink.replace(/\s+/g, "")
-            newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ll=${coords}&z=18`
-        }
-        // Si el valor es el nombre o dirección, lo buscamos con 'q'
-        else if (rawTerritorio) {
+            newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ll=${coords}&z=19`
+        } else if (rawTerritorio) {
             newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&q=${encodeURIComponent(rawTerritorio)}`
         }
 
         setMapUrl(newUrl)
+
+        // Hacemos scroll suave hacia el mapa
+        const mapaElement = document.getElementById("visualizador-mapa")
+        if (mapaElement) {
+            mapaElement.scrollIntoView({ behavior: "smooth", block: "start" })
+        }
     }
 
     if (loading) {
@@ -97,21 +100,20 @@ export default function PorCongre() {
                 })}
             </div>
 
-            {/* APARTADO DEL MAPA INCRUSTADO EN LA MISMA PANTALLA */}
-            <div className="w-full rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700 shadow-md bg-white dark:bg-zinc-800">
+            {/* SECCIÓN DEL MAPA INCRUSTADO EN VIVO */}
+            <div id="visualizador-mapa" className="w-full rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700 shadow-md bg-white dark:bg-zinc-800 scroll-mt-4">
                 <div className="p-3 bg-indigo-500/10 border-b border-indigo-500/20 text-sm font-bold text-indigo-600 dark:text-indigo-400">
                     🗺️ Visualizador de Territorio en Vivo
                 </div>
                 <iframe
                     src={mapUrl}
                     width="100%"
-                    height="550" // Cambiado de 400 a 550 para que sea más grande
+                    height="550"
                     className="w-full border-0"
                     allowFullScreen
                     loading="lazy"
                 ></iframe>
             </div>
-
             {/* LISTADO DE SALIDAS */}
             <div className="space-y-4" id="contenedor_salidas_generales">
                 {salidas.map((element, idx) => (
