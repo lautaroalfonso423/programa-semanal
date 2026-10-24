@@ -17,11 +17,15 @@ type SalidaGrupo = {
     Link_de_Zoom: string
 }
 
+const MAP_ID = "12e40jLmRQSPotpgZ-W8V77N3fp_YH6k"
 
 export default function PorGrupo() {
     const [salidas, setSalidas] = useState<SalidaGrupo[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
+
+    // Estado para controlar dinámicamente el mapa incrustado
+    const [mapUrl, setMapUrl] = useState(`https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F`)
 
     useEffect(() => {
         const cargarDatos = async () => {
@@ -51,6 +55,26 @@ export default function PorGrupo() {
         cargarDatos()
     }, [])
 
+    // Función para actualizar la vista del iframe al seleccionar un territorio
+    const handleSelectTerritory = (territorioVal: string, linkVal: string) => {
+        const rawLink = (linkVal || "").trim()
+        const rawTerritorio = (territorioVal || "").trim()
+
+        let newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F`
+
+        // Si viene un par de coordenadas (-27.xxx, -58.xxx)
+        if (rawLink.includes(",") && !isNaN(parseFloat(rawLink.split(",")[0]))) {
+            const coords = rawLink.replace(/\s+/g, "")
+            newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ll=${coords}&z=18`
+        }
+        // Si viene el nombre del territorio o calle, usamos el buscador interno 'q'
+        else if (rawTerritorio) {
+            newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&q=${encodeURIComponent(rawTerritorio)}`
+        }
+
+        setMapUrl(newUrl)
+    }
+
     if (loading) {
         return (
             <p className="text-xm text-white dark:text-zinc-400 p-4">
@@ -76,7 +100,7 @@ export default function PorGrupo() {
     }
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-sm font-semibold text-slate-800 dark:text-zinc-100 shadow-sm">
                 <Calendar className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                 {new Date().toLocaleDateString("es-AR", {
@@ -87,7 +111,22 @@ export default function PorGrupo() {
                 })}
             </div>
 
-            {/* Grid de tarjetas */}
+            {/* SECCIÓN DEL MAPA INCRUSTADO EN VIVO */}
+            <div className="w-full rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700 shadow-md bg-white dark:bg-zinc-800">
+                <div className="p-3 bg-indigo-500/10 border-b border-indigo-500/20 text-sm font-bold text-indigo-600 dark:text-indigo-400">
+                    🗺️ Visualizador de Territorio en Vivo
+                </div>
+                <iframe
+                    src={mapUrl}
+                    width="100%"
+                    height="550" // Cambiado de 400 a 550 para que sea más grande
+                    className="w-full border-0"
+                    allowFullScreen
+                    loading="lazy"
+                ></iframe>
+            </div>
+
+            {/* Grid de tarjetas de Salidas Grupales */}
             <div className="grid gap-4 sm:grid-cols-2" id="contenedor_salidas_grupales">
                 {salidas.map((element, idx) => (
                     <div
@@ -130,11 +169,7 @@ export default function PorGrupo() {
                             <p>
                                 <strong className="font-bold text-slate-900 dark:text-zinc-100">Territorio Principal:</strong>{" "}
                                 <button
-                                    onClick={() => {
-                                        const coords = (element.Link_del_Terrirotorio || "");
-                                        const url = `https://www.google.com/maps/d/viewer?mid=12e40jLmRQSPotpgZ-W8V77N3fp_YH6k&ll=${coords}&z=19`;
-                                        window.open(url, "_blank", "noopener,noreferrer");
-                                    }}
+                                    onClick={() => handleSelectTerritory(element.Territorio, element.Link_del_Terrirotorio)}
                                     className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium bg-transparent border-none p-0 cursor-pointer text-left inline"
                                 >
                                     {element.Territorio || "Ver Territorio"}

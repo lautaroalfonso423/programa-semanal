@@ -4,7 +4,6 @@ import { DIAS_DE_SEMANA } from "@/src/hooks/datos"
 import { Calendar } from "lucide-react"
 import { useEffect, useState } from "react"
 
-// Tipo de dato según las columnas de la hoja Tabla_General
 type Salida = {
     Dia: string
     Hora: string
@@ -17,10 +16,15 @@ type Salida = {
     Link_de_Zoom: string
 }
 
+const MAP_ID = "12e40jLmRQSPotpgZ-W8V77N3fp_YH6k"
+
 export default function PorCongre() {
     const [salidas, setSalidas] = useState<Salida[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
+
+    // Estado para controlar dinámicamente qué muestra el mapa incrustado
+    const [mapUrl, setMapUrl] = useState(`https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F`)
 
     useEffect(() => {
         const cargarDatos = async () => {
@@ -33,7 +37,6 @@ export default function PorCongre() {
                 if (!res.ok) throw new Error("No se encontraron datos")
 
                 const data: Salida[] = await res.json()
-
 
                 const filtradas = data.filter((item) =>
                     DIAS_DE_SEMANA.includes(item.Dia)
@@ -50,34 +53,40 @@ export default function PorCongre() {
         cargarDatos()
     }, [])
 
+    // Función para actualizar el mapa en pantalla al hacer clic
+    const handleSelectTerritory = (territorioVal: string, linkVal: string) => {
+        const rawLink = (linkVal || "").trim()
+        const rawTerritorio = (territorioVal || "").trim()
+
+        let newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F`
+
+        // Si el valor es una coordenada
+        if (rawLink.includes(",") && !isNaN(parseFloat(rawLink.split(",")[0]))) {
+            const coords = rawLink.replace(/\s+/g, "")
+            newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ll=${coords}&z=18`
+        }
+        // Si el valor es el nombre o dirección, lo buscamos con 'q'
+        else if (rawTerritorio) {
+            newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&q=${encodeURIComponent(rawTerritorio)}`
+        }
+
+        setMapUrl(newUrl)
+    }
+
     if (loading) {
-        return (
-            <p className="text-xm text-white dark:text-zinc-400 p-4">
-                Cargando la Base de Datos...
-            </p>
-        )
+        return <p className="text-xm text-white dark:text-zinc-400 p-4">Cargando la Base de Datos...</p>
     }
 
     if (error) {
-        return (
-            <p className="text-xs text-red-500 p-4">
-                {error}
-            </p>
-        )
+        return <p className="text-xs text-red-500 p-4">{error}</p>
     }
 
     if (salidas.length === 0) {
-        return (
-            <p className="text-xs text-slate-500 dark:text-zinc-400 p-4">
-                No hay ningún programa activo para esta semana.
-            </p>
-        )
+        return <p className="text-xs text-slate-500 dark:text-zinc-400 p-4">No hay ningún programa activo para esta semana.</p>
     }
 
-
     return (
-        <div className="space-y-4">
-
+        <div className="space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-sm font-semibold text-slate-800 dark:text-zinc-100 shadow-sm">
                 <Calendar className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                 {new Date().toLocaleDateString("es-AR", {
@@ -87,14 +96,29 @@ export default function PorCongre() {
                     year: "numeric",
                 })}
             </div>
-            <div className="space-y-4" id="contenedor_salidas_generales">
 
+            {/* APARTADO DEL MAPA INCRUSTADO EN LA MISMA PANTALLA */}
+            <div className="w-full rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700 shadow-md bg-white dark:bg-zinc-800">
+                <div className="p-3 bg-indigo-500/10 border-b border-indigo-500/20 text-sm font-bold text-indigo-600 dark:text-indigo-400">
+                    🗺️ Visualizador de Territorio en Vivo
+                </div>
+                <iframe
+                    src={mapUrl}
+                    width="100%"
+                    height="550" // Cambiado de 400 a 550 para que sea más grande
+                    className="w-full border-0"
+                    allowFullScreen
+                    loading="lazy"
+                ></iframe>
+            </div>
+
+            {/* LISTADO DE SALIDAS */}
+            <div className="space-y-4" id="contenedor_salidas_generales">
                 {salidas.map((element, idx) => (
                     <div
                         key={idx}
                         className="rounded-xl bg-slate-50 dark:bg-zinc-800/50 border border-slate-200 dark:border-zinc-700 overflow-hidden"
                     >
-                        {/* Header */}
                         <div className="flex items-center justify-between px-4 py-3 bg-indigo-500/10 border-b border-indigo-500/20">
                             <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wide">
                                 {element.Dia || ""}
@@ -104,7 +128,6 @@ export default function PorCongre() {
                             </span>
                         </div>
 
-                        {/* Cuerpo */}
                         <div className="p-4 space-y-2 text-base text-slate-700 dark:text-zinc-200 leading-relaxed">
                             <p>
                                 <strong className="font-bold text-slate-900 dark:text-zinc-100">Ubicación:</strong>{" "}
@@ -130,11 +153,7 @@ export default function PorCongre() {
                             <p>
                                 <strong className="font-bold text-slate-900 dark:text-zinc-100">Territorio Principal:</strong>{" "}
                                 <button
-                                    onClick={() => {
-                                        const coords = (element.Link_del_Terrirotorio || "");
-                                        const url = `https://www.google.com/maps/d/viewer?mid=12e40jLmRQSPotpgZ-W8V77N3fp_YH6k&ll=${coords}&z=19`;
-                                        window.open(url, "_blank", "noopener,noreferrer");
-                                    }}
+                                    onClick={() => handleSelectTerritory(element.Territorio, element.Link_del_Terrirotorio)}
                                     className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium bg-transparent border-none p-0 cursor-pointer text-left inline"
                                 >
                                     {element.Territorio || "Ver Territorio"}
@@ -146,7 +165,6 @@ export default function PorCongre() {
                             </p>
                         </div>
 
-                        {/* Footer (solo si hay Zoom) */}
                         {element.Link_de_Zoom && (
                             <div className="px-4 pb-4">
                                 <a
