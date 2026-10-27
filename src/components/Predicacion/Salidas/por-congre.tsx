@@ -106,7 +106,6 @@ export default function PorCongre() {
 
                 {mapUrl ? (
                     <>
-                        
                         <iframe
                             src={mapUrl}
                             width="100%"
@@ -125,7 +124,6 @@ export default function PorCongre() {
                                 <span>Toca el <strong>bloque de color</strong> para ver el número del territorio.</span>
                             </p>
                         </div>
-                        
                     </>
                 ) : (
                     <div className="flex flex-col items-center justify-center p-12 text-center text-slate-500 dark:text-zinc-400 space-y-2">
