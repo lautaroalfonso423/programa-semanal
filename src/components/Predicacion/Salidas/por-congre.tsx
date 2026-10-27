@@ -1,7 +1,7 @@
 "use client"
 
 import { DIAS_DE_SEMANA } from "@/src/hooks/datos"
-import { Calendar } from "lucide-react"
+import { Calendar, MapPin } from "lucide-react"
 import { useEffect, useState } from "react"
 
 type Salida = {
@@ -23,8 +23,8 @@ export default function PorCongre() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
-    // Estado para controlar dinámicamente qué muestra el mapa incrustado
-    const [mapUrl, setMapUrl] = useState(`https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F`)
+    // Arranca en null para evitar carga innecesaria de entrada
+    const [mapUrl, setMapUrl] = useState<string | null>(null)
 
     useEffect(() => {
         const cargarDatos = async () => {
@@ -53,7 +53,7 @@ export default function PorCongre() {
         cargarDatos()
     }, [])
 
-    // Función para actualizar la vista y hacer scroll automático hacia arriba
+    // Función para actualizar la vista, renderizar el mapa y hacer scroll automático hacia arriba
     const handleSelectTerritory = (territorioVal: string, linkVal: string) => {
         const rawLink = (linkVal || "").trim()
         const rawTerritorio = (territorioVal || "").trim()
@@ -99,21 +99,35 @@ export default function PorCongre() {
                     year: "numeric",
                 })}
             </div>
-
-            {/* SECCIÓN DEL MAPA INCRUSTADO EN VIVO */}
-            <div id="visualizador-mapa" className="w-full rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700 shadow-md bg-white dark:bg-zinc-800 scroll-mt-4">
-                <div className="p-3 bg-indigo-500/10 border-b border-indigo-500/20 text-sm font-bold text-indigo-600 dark:text-indigo-400">
-                    🗺️ Visualizador de Territorio en Vivo
+            
+            <div id="visualizador-mapa" className="w-full rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700 shadow-md bg-white dark:bg-zinc-900 scroll-mt-4">
+                <div className="p-3 bg-indigo-500/10 border-b border-indigo-500/20 text-sm font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
+                    <MapPin className="w-4 h-4" />
+                    Visualizador de Territorio en Vivo
                 </div>
-                <iframe
-                    src={mapUrl}
-                    width="100%"
-                    height="550"
-                    className="w-full border-0"
-                    allowFullScreen
-                    loading="lazy"
-                ></iframe>
+
+                {mapUrl ? (
+                    <iframe
+                        src={mapUrl}
+                        width="100%"
+                        height="550"
+                        className="w-full border-0"
+                        allowFullScreen
+                        loading="lazy"
+                    ></iframe>
+                ) : (
+                    <div className="flex flex-col items-center justify-center p-12 text-center text-slate-500 dark:text-zinc-400 space-y-2">
+                        <MapPin className="w-10 h-10 text-indigo-500/40 animate-bounce" />
+                        <p className="text-base font-medium text-slate-700 dark:text-zinc-200">
+                            Toca un territorio en la lista de abajo para empezar a visualizarlo aquí.
+                        </p>
+                        <p className="text-xs text-slate-400 dark:text-zinc-500">
+                            El mapa se cargará en este espacio de manera interactiva.
+                        </p>
+                    </div>
+                )}
             </div>
+
             {/* LISTADO DE SALIDAS */}
             <div className="space-y-4" id="contenedor_salidas_generales">
                 {salidas.map((element, idx) => (
