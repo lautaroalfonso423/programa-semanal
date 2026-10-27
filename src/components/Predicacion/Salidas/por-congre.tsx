@@ -53,7 +53,6 @@ export default function PorCongre() {
         cargarDatos()
     }, [])
 
-    // Función para actualizar la vista, renderizar el mapa y hacer scroll automático hacia arriba
     const handleSelectTerritory = (territorioVal: string, linkVal: string) => {
         const rawLink = (linkVal || "").trim()
         const rawTerritorio = (territorioVal || "").trim()
@@ -69,7 +68,6 @@ export default function PorCongre() {
 
         setMapUrl(newUrl)
 
-        // Hacemos scroll suave hacia el mapa
         const mapaElement = document.getElementById("visualizador-mapa")
         if (mapaElement) {
             mapaElement.scrollIntoView({ behavior: "smooth", block: "start" })
@@ -103,18 +101,32 @@ export default function PorCongre() {
             <div id="visualizador-mapa" className="w-full rounded-xl overflow-hidden border border-slate-200 dark:border-zinc-700 shadow-md bg-white dark:bg-zinc-900 scroll-mt-4">
                 <div className="p-3 bg-indigo-500/10 border-b border-indigo-500/20 text-sm font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2">
                     <MapPin className="w-4 h-4" />
-                    Visualizador de Territorio en Vivo
+                    <span>Visualizador de Territorio en Vivo</span>
                 </div>
 
                 {mapUrl ? (
-                    <iframe
-                        src={mapUrl}
-                        width="100%"
-                        height="550"
-                        className="w-full border-0"
-                        allowFullScreen
-                        loading="lazy"
-                    ></iframe>
+                    <>
+                        
+                        <iframe
+                            src={mapUrl}
+                            width="100%"
+                            height="550"
+                            className="w-full border-0"
+                            allowFullScreen
+                            loading="lazy"
+                        ></iframe>
+                        <div className="px-3.5 py-4 bg-amber-500/10 border-t border-amber-500/20 text-sm sm:text-sm text-amber-900 dark:text-amber-200 space-y-1.5 rounded-b-xl">
+                            <p className="flex items-start sm:items-center gap-2">
+                                <span className="text-sm shrink-0">💡</span> 
+                                <span>Usa <strong>dos dedos</strong> para mover o hacer zoom en el mapa.</span>
+                            </p>
+                            <p className="flex items-start sm:items-center gap-2">
+                                <span className="text-sm shrink-0">📌</span> 
+                                <span>Toca el <strong>bloque de color</strong> para ver el número del territorio.</span>
+                            </p>
+                        </div>
+                        
+                    </>
                 ) : (
                     <div className="flex flex-col items-center justify-center p-12 text-center text-slate-500 dark:text-zinc-400 space-y-2">
                         <MapPin className="w-10 h-10 text-indigo-500/40 animate-bounce" />
@@ -128,7 +140,6 @@ export default function PorCongre() {
                 )}
             </div>
 
-            {/* LISTADO DE SALIDAS */}
             <div className="space-y-4" id="contenedor_salidas_generales">
                 {salidas.map((element, idx) => (
                     <div
