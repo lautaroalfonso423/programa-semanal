@@ -70,39 +70,39 @@ export default function HomeView() {
       {isPanelOpen && (
         <div
           onClick={() => setIsPanelOpen(false)}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden transition-opacity"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden transition-opacity"
         />
       )}
 
-      {/* PANEL DESPLEGABLE LATERAL */}
+      {/* PANEL DESPLEGABLE LATERAL (Usando Zinc-900 para destacar sobre el fondo #161616) */}
       <aside
         className={`
           fixed top-0 left-0 h-full z-50
           w-[280px] sm:w-[320px] lg:w-[360px]
-          bg-white dark:bg-[#182030]
-          border-r border-slate-200 dark:border-slate-800
+          bg-white dark:bg-zinc-900
+          border-r border-slate-200 dark:border-zinc-800
           shadow-2xl
           transform transition-transform duration-300 ease-in-out flex flex-col
           ${isPanelOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
         {/* Header del Panel */}
-        <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-[#121824]/50">
+        <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-zinc-800 flex items-center justify-between bg-slate-50/50 dark:bg-zinc-900/80">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-500/20">
               <Calendar className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-bold text-sm sm:text-base text-slate-900 dark:text-slate-100">
+              <h2 className="font-bold text-sm sm:text-base text-slate-900 dark:text-zinc-100">
                 Programas Semanales
               </h2>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">Cong. Sur Barranqueras</p>
+              <p className="text-[11px] text-slate-500 dark:text-zinc-400">Cong. Sur Barranqueras</p>
             </div>
           </div>
 
           <button
             onClick={() => setIsPanelOpen(false)}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
             title="Cerrar Panel"
           >
             <X className="w-5 h-5" />
@@ -110,13 +110,13 @@ export default function HomeView() {
         </div>
 
         {/* Pestañas de Navegación del Sidebar */}
-        <div className="flex border-b border-slate-200 dark:border-slate-800 px-3 pt-2 gap-1 bg-slate-50/30 dark:bg-[#121824]/30">
+        <div className="flex border-b border-slate-200 dark:border-zinc-800 px-3 pt-2 gap-1 bg-slate-50/30 dark:bg-zinc-900/50">
           <button
             onClick={() => setActiveTab('reading')}
             className={`flex-1 py-2 text-xs font-semibold rounded-t-lg transition-colors flex items-center justify-center gap-1 border-b-2 ${
               activeTab === 'reading'
-                ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400 bg-white dark:bg-[#121824]'
-                : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400 bg-white dark:bg-zinc-800/80'
+                : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-zinc-400 dark:hover:text-zinc-200'
             }`}
           >
             <BookOpen className="w-4 h-4" />
@@ -127,8 +127,8 @@ export default function HomeView() {
             onClick={() => setActiveTab('tasks')}
             className={`flex-1 py-2 text-xs font-semibold rounded-t-lg transition-colors flex items-center justify-center gap-1 border-b-2 ${
               activeTab === 'tasks'
-                ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400 bg-white dark:bg-[#121824]'
-                : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400 bg-white dark:bg-zinc-800/80'
+                : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-zinc-400 dark:hover:text-zinc-200'
             }`}
           >
             <UserCircle2 className="w-4 h-4" />
@@ -139,8 +139,8 @@ export default function HomeView() {
             onClick={() => setActiveTab('notes')}
             className={`flex-1 py-2 text-xs font-semibold rounded-t-lg transition-colors flex items-center justify-center gap-1 border-b-2 ${
               activeTab === 'notes'
-                ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400 bg-white dark:bg-[#121824]'
-                : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
+                ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400 bg-white dark:bg-zinc-800/80'
+                : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-zinc-400 dark:hover:text-zinc-200'
             }`}
           >
             <ShieldCheck className="w-4 h-4" />
@@ -157,7 +157,7 @@ export default function HomeView() {
                 className={`w-full py-3 px-4 rounded-lg text-xs font-semibold transition-all flex items-center gap-3 border-l-4 ${
                   vistaActiva === 'salidas'
                     ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300'
-                    : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 text-slate-600 dark:text-slate-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    : 'border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/40 text-slate-600 dark:text-zinc-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-zinc-800'
                 }`}
               >
                 <BookOpen className="w-4 h-4" />
@@ -170,7 +170,7 @@ export default function HomeView() {
                 className={`w-full py-3 px-4 rounded-lg text-xs font-semibold transition-all flex items-center gap-3 border-l-4 ${
                   vistaActiva === 'carrito'
                     ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300'
-                    : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 text-slate-600 dark:text-slate-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    : 'border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/40 text-slate-600 dark:text-zinc-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-zinc-800'
                 }`}
               >
                 <Calendar className="w-4 h-4" />
@@ -187,7 +187,7 @@ export default function HomeView() {
                 className={`w-full py-3 px-4 rounded-lg text-xs font-semibold transition-all flex items-center gap-3 border-l-4 ${
                   vistaReu === 'entre_semana'
                     ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300'
-                    : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 text-slate-600 dark:text-slate-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    : 'border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/40 text-slate-600 dark:text-zinc-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-zinc-800'
                 }`}
               >
                 <BookOpen className="w-4 h-4" />
@@ -200,7 +200,7 @@ export default function HomeView() {
                 className={`w-full py-3 px-4 rounded-lg text-xs font-semibold transition-all flex items-center gap-3 border-l-4 ${
                   vistaReu === 'fin_semana'
                     ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300'
-                    : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 text-slate-600 dark:text-slate-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    : 'border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/40 text-slate-600 dark:text-zinc-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-zinc-800'
                 }`}
               >
                 <Calendar className="w-4 h-4" />
@@ -213,22 +213,22 @@ export default function HomeView() {
           {activeTab === 'notes' && (
             <div className="space-y-4">
               {!valido ? (
-                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 shadow-sm">
+                <div className="p-5 rounded-2xl bg-slate-50 dark:bg-zinc-800/60 border border-slate-200 dark:border-zinc-700 shadow-sm">
                   <div className="flex flex-col items-center text-center mb-5">
                     <div className="p-3 rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 mb-3">
                       <ShieldCheck className="w-6 h-6" />
                     </div>
-                    <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100">
+                    <h3 className="text-sm font-bold text-slate-800 dark:text-zinc-100">
                       Acceso Administrador
                     </h3>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 max-w-[220px]">
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 max-w-[220px]">
                       Ingresa el código de verificación para gestionar el programa.
                     </p>
                   </div>
 
                   <form onSubmit={handleAddNote} className="space-y-3">
                     <div>
-                      <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1.5 uppercase tracking-wide">
+                      <label className="block text-[11px] font-semibold text-slate-600 dark:text-zinc-400 mb-1.5 uppercase tracking-wide">
                         Código de Verificación
                       </label>
                       <input
@@ -236,7 +236,7 @@ export default function HomeView() {
                         placeholder="• • • • • •"
                         value={newTitle}
                         onChange={(e) => setNewTitle(e.target.value)}
-                        className="w-full text-center text-sm tracking-[0.3em] font-mono p-3 text-slate-900 dark:text-slate-100 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-slate-300 dark:placeholder:text-slate-600"
+                        className="w-full text-center text-sm tracking-[0.3em] font-mono p-3 text-slate-900 dark:text-zinc-100 rounded-xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-slate-300 dark:placeholder:text-zinc-600"
                       />
                     </div>
 
@@ -256,7 +256,7 @@ export default function HomeView() {
                     className={`w-full py-3 px-4 rounded-lg text-xs font-semibold transition-all flex items-center gap-3 border-l-4 ${
                       vistaAdmin === 'adminPredi'
                         ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300'
-                        : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 text-slate-600 dark:text-slate-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-slate-800'
+                        : 'border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/40 text-slate-600 dark:text-zinc-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-zinc-800'
                     }`}
                   >
                     <Calendar className="w-4 h-4" />
@@ -268,7 +268,7 @@ export default function HomeView() {
                     className={`w-full py-3 px-4 rounded-lg text-xs font-semibold transition-all flex items-center gap-3 border-l-4 ${
                       vistaAdmin === 'adminReunion'
                         ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300'
-                        : 'border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/40 text-slate-600 dark:text-slate-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-slate-800'
+                        : 'border-slate-300 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/40 text-slate-600 dark:text-zinc-300 hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-zinc-800'
                     }`}
                   >
                     <Calendar className="w-4 h-4" />
@@ -281,7 +281,7 @@ export default function HomeView() {
           )}
         </div>
 
-        <div className="p-4 border-t border-slate-200 dark:border-slate-800 text-center text-[11px] text-slate-400 dark:text-slate-500">
+        <div className="p-4 border-t border-slate-200 dark:border-zinc-800 text-center text-[11px] text-slate-400 dark:text-zinc-500">
           Cong. Sur Barranqueras • Edición 2026
         </div>
       </aside>
@@ -293,11 +293,11 @@ export default function HomeView() {
           ${isPanelOpen ? 'lg:pl-[360px]' : 'pl-0'}
         `}
       >
-        <header className="sticky top-0 z-30 bg-white/80 dark:bg-[#121824]/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 flex items-center gap-3">
+        <header className="sticky top-0 z-30 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-slate-200 dark:border-zinc-800 px-4 py-3 flex items-center gap-3">
           {!isPanelOpen && (
             <button
               onClick={() => setIsPanelOpen(true)}
-              className="p-2 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-indigo-950 hover:text-indigo-600 transition-all flex items-center gap-2 text-xs font-semibold shadow-sm border border-slate-200 dark:border-slate-700 shrink-0"
+              className="p-2 rounded-xl bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-200 hover:bg-indigo-50 dark:hover:bg-indigo-950 hover:text-indigo-600 transition-all flex items-center gap-2 text-xs font-semibold shadow-sm border border-slate-200 dark:border-zinc-700 shrink-0"
               title="Abrir Panel"
             >
               <PanelLeftOpen className="w-4 h-4" />
@@ -305,7 +305,7 @@ export default function HomeView() {
             </button>
           )}
 
-          <h1 className="text-sm sm:text-base font-semibold text-slate-700 dark:text-slate-200">
+          <h1 className="text-sm sm:text-base font-semibold text-slate-700 dark:text-zinc-200">
             {vistaActiva === 'salidas' && 'Salidas de Predicación'}
             {vistaActiva === 'carrito' && 'Carrito de Predicación'}
             {vistaReu === 'entre_semana' && 'Reunión Entre Semana'}
@@ -329,7 +329,7 @@ export default function HomeView() {
           {vistaAdmin === "adminReunion" && valido && <AdminReunion />}
 
           {!vistaActiva && !vistaReu && !vistaAdmin && (
-            <div className="flex items-center justify-center min-h-[60vh] text-slate-400 dark:text-slate-500 text-sm">
+            <div className="flex items-center justify-center min-h-[60vh] text-slate-400 dark:text-zinc-500 text-sm">
               Selecciona una opción del panel para comenzar.
             </div>
           )}
