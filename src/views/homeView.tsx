@@ -15,6 +15,7 @@ import Carritos from '../components/Predicacion/carritos';
 import EntreSemana from '../components/Reunion/entre-semana';
 import FinDeSemana from '../components/Reunion/fin-semana';
 import Asignaciones from '../components/Reunion/asignaciones';
+import FechasEventos from '../components/Reunion/eventos';
 
 type datosPredi = 'salidas' | 'carrito';
 type datosReunion = 'entre_semana' | 'fin_semana' | "fecha_eventos" | "asignaciones";
@@ -247,7 +248,7 @@ export default function HomeView() {
         )}
         {vistaReu === 'entre_semana' && <EntreSemana />}
         {vistaReu === 'fin_semana' && <FinDeSemana />}
-        {vistaReu === "fecha_eventos" && <EntreSemana />}
+        {vistaReu === "fecha_eventos" && <FechasEventos />}
         {vistaReu === "asignaciones" && <Asignaciones/>}
 
         {!vistaActiva && !vistaReu && (
