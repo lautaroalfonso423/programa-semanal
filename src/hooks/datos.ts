@@ -41,5 +41,6 @@ export const LISTA_NOMBRES = [
     "Ramon Dorrego",
     "Raul Prada",
     "Walter Paniagua",
-    "Tomas Romano"
+    "Tomas Romano",
+    "Emanuel Gamarra"
 ]
