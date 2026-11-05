@@ -3,326 +3,320 @@
 import { useEffect, useState } from "react"
 import { Calendar, BookOpen, Users, Heart } from "lucide-react"
 
-    type Semana = {
-    Semana: string
-    Permisos: string
-    }
+type TablaPrincipal = {
+  Miercoles: string
+  Permisos_Reunion_Entre_Semana: string
+  Domingo: string
+  Permisos_Reunion_Fin_Semana: string
+}
 
-    type Tesoro = {
-    Fecha_Tesoros: string
-    Presidente: string
-    Presidente_Sala_B: string
-    Cantico: string
-    Oracion: string
-    Titulo_Tesoros: string
-    Discursante: string
-    Conductor_Perlas: string
-    Lectura_Biblia: string
-    Lector_A: string
-    Lector_B: string
-    }
+type Tesoro = {
+  Dia_Tesoros: string
+  Presidente: string
+  "Sala B": string
+  Cantico: string
+  Oracion: string
+  Titulo_Tesoros: string
+  Discursante: string
+  Conductor_Perlas: string
+  Lectura_Biblia: string
+  Lector_A: string
+  Lector_B: string
+}
 
-    type Maestro = {
-    Fecha_Maestros: string
-    Titulo: string
-    Tiempo: string
-    Asignados_SalaA: string
-    Asignados_SalaB: string
-    }
+type Maestro = {
+  Dia_Mejores_Maestros: string
+  Titulo: string
+  Tiempo: string
+  Asignados_Sala_A: string
+  Asignados_Sala_B: string
+}
 
-    type VidaCristiana = {
-    Fecha_Vida_Cristiana: string
-    Cantico_Intermedio: string
-    Primer_Discurso: string
-    Discursante_Primer_Discurso: string
-    Segundo_Discurso: string
-    Discursante_Segundo_Discurso: string
-    Tercer_Discurso: string
-    Discursante_Tercer_Discurso: string
-    Estudio_Biblico: string
-    Conductor_Lector: string
-    Cantico_Oracion: string
-    Limpieza_Encargado: string
-    }
+type VidaCristiana = {
+  Dia_Vida_Cristiana: string
+  Cantico_Intermedio: string
+  Primer_Discurso: string
+  Tiempo_P: string
+  Discursante_Primer_Discurso: string
+  Segundo_Discurso: string
+  Tiempo_S:string
+  Discursante_Segundo_Discurso: string
+  Numero_Estudio_Biblico?: string
+  Conductor_Lector: string
+  Cantico_Final: string
+  Oracion_Final: string
+  Grupo_Limpieza: string
+  Encargado: string
+}
 
-    export default function EntreSemana() {
-    const [tesoros, setTesoros] = useState<Tesoro[]>([])
-    const [maestros, setMaestros] = useState<Maestro[]>([])
-    const [vida, setVida] = useState<VidaCristiana[]>([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
+export default function EntreSemana() {
+  const [tesoros, setTesoros] = useState<Tesoro[]>([])
+  const [maestros, setMaestros] = useState<Maestro[]>([])
+  const [vida, setVida] = useState<VidaCristiana[]>([])
+  const [fechaActiva, setFechaActiva] = useState<string>("")
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-    useEffect(() => {
-        const cargarDatos = async () => {
-        try {
-            setLoading(true)
-            setError(null)
+  useEffect(() => {
+    const cargarDatos = async () => {
+      try {
+        setLoading(true)
+        setError(null)
 
-            const fetchTabla = async (nombre: string) => {
-            const url = `https://opensheet.elk.sh/1uLNHtuM2fcaaCaIXh5lGy-Im5vou6uItiM8YjgiLmL4/${nombre}`
-            const res = await fetch(url)
-            if (!res.ok) throw new Error(`No se encontraron datos en ${nombre}`)
-            return await res.json()
-            }
-
-            const [programa, tesorosData, maestrosData, vidaData] = await Promise.all([
-            fetchTabla("Tabla_Principal"),
-            fetchTabla("Tesoros"),
-            fetchTabla("3"),
-            fetchTabla("4"),
-            ])
-
-            const semanaActiva = programa.find((e: Semana) => e.Permisos === "active")
-
-            if (!semanaActiva) {
-            setError("No hay un programa activo asignado para esta semana.")
-            return
-            }
-
-            const fechaActual = semanaActiva.Semana
-
-            setTesoros(tesorosData.filter((e: Tesoro) => e.Fecha_Tesoros === fechaActual))
-            setMaestros(maestrosData.filter((e: Maestro) => e.Fecha_Maestros === fechaActual))
-            setVida(vidaData.filter((e: VidaCristiana) => e.Fecha_Vida_Cristiana === fechaActual))
-        } catch (err: any) {
-            setError(err.message || "Error al cargar el programa.")
-        } finally {
-            setLoading(false)
-        }
+        const fetchTabla = async (nombre: string) => {
+          const url = `https://opensheet.elk.sh/1uLNHtuM2fcaaCaIXh5lGy-Im5vou6uItiM8YjgiLmL4/${nombre}`
+          const res = await fetch(url)
+          if (!res.ok) throw new Error(`No se encontraron datos en ${nombre}`)
+          return await res.json()
         }
 
-        cargarDatos()
-    }, [])
+       // 1. Consultamos la Tabla_Principal del mismo archivo para ver el estado active
+        const controlData: TablaPrincipal[] = await fetchTabla("Tabla_Principal")
 
-    if (loading) {
-        return (
-        <p className="text-center text-sm text-slate-500 py-8">
-            Cargando la Base de Datos...
-        </p>
-        )
+        // 2. Buscamos la fila con el permiso activo de entre semana
+        const semanaActiva = controlData.find((e) => e.Permisos_Reunion_Entre_Semana === "active")
+
+        if (!semanaActiva || !semanaActiva.Miercoles) {
+          setError("No hay ninguna reunión entre semana activa en este momento.")
+          return
+        }
+        const fechaActual = semanaActiva.Miercoles.trim()
+        setFechaActiva(fechaActual)
+
+        // Traemos las tablas de contenido de la reunión
+        const [tesorosData, maestrosData, vidaData] = await Promise.all([
+          fetchTabla("Tesoros"),
+          fetchTabla("3"),
+          fetchTabla("4"),
+        ])
+
+        setTesoros(tesorosData.filter((e: Tesoro) => e.Dia_Tesoros?.trim() === fechaActual))
+        setMaestros(maestrosData.filter((e: Maestro) => e.Dia_Mejores_Maestros?.trim() === fechaActual))
+        setVida(vidaData.filter((e: VidaCristiana) => e.Dia_Vida_Cristiana?.trim() === fechaActual))
+      } catch (err: any) {
+        setError(err.message || "Error al cargar el programa.")
+      } finally {
+        setLoading(false)
+      }
     }
 
-    if (error) {
-        return (
-        <p className="text-center text-sm text-red-500 py-8">
-            {error}
+    cargarDatos()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-12">
+        <p className="text-sm text-zinc-400 animate-pulse">
+          Cargando la Reunión Entre Semana...
         </p>
-        )
-    }
-
-
- return (
-    <div className="w-full py-6 sm:py-12">
-        <div className="w-full max-w-3xl mx-auto">
-
-        {/* ============================ */}
-        {/* FECHA DESTACADA             */}
-        {/* ============================ */}
-        {(tesoros.length > 0 || maestros.length > 0 || vida.length > 0) && (
-            <div className="flex justify-center px-4 sm:px-0">
-            <div className="inline-flex items-center gap-3 px-3 py-3 rounded bg-indigo-600 text-white shadow-lg">
-                <Calendar className="w-5 h-5" />
-                <span className="text-ls font-bold tracking-wide">
-                Semana: {tesoros[0]?.Fecha_Tesoros || maestros[0]?.Fecha_Maestros || vida[0]?.Fecha_Vida_Cristiana || "-"}
-                </span>
-            </div>
-            </div>
-        )}
-
-        {/* ============================ */}
-        {/* TESOROS DE LA BIBLIA         */}
-        {/* ============================ */}
-        {tesoros.length > 0 && (
-            <section className="w-full rounded-none bg-white border-y sm:border border-slate-200 shadow-none sm:shadow-lg sm:shadow-slate-900/5 p-4 sm:p-8 transition-all hover:shadow-xl mt-6">
-            <header className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-200">
-                <BookOpen className="w-6 h-6 text-indigo-600 shrink-0" />
-                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 uppercase tracking-wide">
-                Tesoros de la Biblia
-                </h3>
-            </header>
-
-            <div className="space-y-5">
-                {tesoros.map((t, i) => (
-                <div key={i} className="space-y-4">
-
-                    <h4 className="text-lg sm:text-xl font-extrabold text-slate-900">
-                    Presidente: <span className="text-indigo-700">{t.Presidente || "-"}</span>
-                    </h4>
-
-                    <div>
-                    <div className="flex justify-between items-center gap-4 py-3 border-b border-slate-100 text-sm sm:text-base">
-                        <span className="font-semibold text-slate-600">Sala B:</span>
-                        <span className="font-bold text-slate-900">{t.Presidente_Sala_B || "-"}</span>
-                    </div>
-                    <div className="flex justify-between items-center gap-4 py-3 border-b border-slate-100 text-sm sm:text-base">
-                        <span className="font-semibold text-slate-600">Cántico:</span>
-                        <span className="font-bold text-slate-900">Canción {t.Cantico || "-"}</span>
-                    </div>
-                    <div className="flex justify-between items-center gap-4 py-3 border-b border-slate-100 text-sm sm:text-base">
-                        <span className="font-semibold text-slate-600">Oración:</span>
-                        <span className="font-bold text-slate-900">{t.Oracion || "-"}</span>
-                    </div>
-                    </div>
-
-                    <div className="space-y-3 pt-2">
-                    <div className="flex flex-col items-center gap-1.5 py-4 border-b border-slate-100">
-                        <span className="text-sm sm:text-base font-semibold text-slate-600 text-center">
-                        1. {t.Titulo_Tesoros || "-"}{" "}
-                        <span className="text-xs sm:text-sm text-slate-400">(10 mins.)</span>
-                        </span>
-                        <span className="text-base sm:text-lg font-bold text-slate-900 text-center">
-                        {t.Discursante || "-"}
-                        </span>
-                    </div>
-
-                    <div className="flex flex-col items-center gap-1.5 py-4 border-b border-slate-100">
-                        <span className="text-sm sm:text-base font-semibold text-slate-600 text-center">
-                        2. Busquemos perlas escondidas{" "}
-                        <span className="text-xs sm:text-sm text-slate-400">(10 mins.)</span>
-                        </span>
-                        <span className="text-base sm:text-lg font-bold text-slate-900 text-center">
-                        {t.Conductor_Perlas || "-"}
-                        </span>
-                    </div>
-
-                    <div className="flex flex-col items-center gap-1.5 py-4">
-                        <span className="text-sm sm:text-base font-semibold text-slate-600 text-center">
-                        3. Lectura de la Biblia:{" "}
-                        <span className="text-slate-800 font-bold">{t.Lectura_Biblia || "-"}</span>{" "}
-                        <span className="text-xs sm:text-sm text-slate-400">(4 mins.)</span>
-                        </span>
-                        <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm sm:text-base">
-                        <span className="text-slate-600">
-                            Sala A: <span className="font-bold text-slate-900">{t.Lector_A || "-"}</span>
-                        </span>
-                        <span className="text-slate-600">
-                            Sala B: <span className="font-bold text-slate-900">{t.Lector_B || "-"}</span>
-                        </span>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                ))}
-            </div>
-            </section>
-        )}
-
-        {/* ============================ */}
-        {/* MEJORES MAESTROS             */}
-        {/* ============================ */}
-        {maestros.length > 0 && (
-            <section className="w-full rounded-none bg-white border-y sm:border border-slate-200 shadow-none sm:shadow-lg sm:shadow-slate-900/5 p-4 sm:p-8 transition-all hover:shadow-xl">
-            <header className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-200">
-                <Users className="w-6 h-6 text-indigo-600 shrink-0" />
-                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 uppercase tracking-wide">
-                Mejores Maestros
-                </h3>
-            </header>
-
-            <div className="space-y-3">
-                {maestros.map((m, i) => (
-                <div key={i} className="rounded-xl sm:rounded-2xl bg-indigo-50/50 border border-indigo-100 p-4 space-y-2">
-                    <p className="text-sm sm:text-base font-extrabold text-slate-900">
-                    {m.Titulo || "-"}{" "}
-                    <span className="text-xs sm:text-sm font-normal text-slate-400">({m.Tiempo || "-"} mins.)</span>
-                    </p>
-                    <div className="space-y-1 text-sm sm:text-base">
-                    <p className="text-slate-600">
-                        Sala A: <span className="font-bold text-slate-900">{m.Asignados_SalaA || "-"}</span>
-                    </p>
-                    <p className="text-slate-600">
-                        Sala B: <span className="font-bold text-slate-900">{m.Asignados_SalaB || "-"}</span>
-                    </p>
-                    </div>
-                </div>
-                ))}
-            </div>
-            </section>
-        )}
-
-        {/* ============================ */}
-        {/* NUESTRA VIDA CRISTIANA       */}
-        {/* ============================ */}
-        {vida.length > 0 && (
-             <section className="w-full rounded-none bg-white border-y sm:border border-slate-200 shadow-none sm:shadow-lg sm:shadow-slate-900/5 p-4 sm:p-8 transition-all hover:shadow-xl">
-            <header className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-200">
-                <Heart className="w-6 h-6 text-indigo-600 shrink-0" />
-                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 uppercase tracking-wide">
-                Nuestra Vida Cristiana
-                </h3>
-            </header>
-
-            <div className="space-y-5">
-                {vida.map((v, i) => (
-                <div key={i} className="space-y-4">
-                    <div className="flex justify-between items-center gap-4 py-3 border-b border-slate-100 text-sm sm:text-base">
-                    <span className="font-semibold text-slate-600">Cántico intermedio:</span>
-                    <span className="font-bold text-slate-900">Canción {v.Cantico_Intermedio || "-"}</span>
-                    </div>
-
-                    <div className="space-y-3 pt-2">
-                    {v.Primer_Discurso && (
-                        <div className="flex flex-col items-center gap-1.5 py-4 border-b border-slate-100">
-                        <span className="text-sm sm:text-base font-semibold text-slate-600 text-center">
-                            {v.Primer_Discurso}
-                        </span>
-                        <span className="text-base sm:text-lg font-bold text-slate-900 text-center">
-                            {v.Discursante_Primer_Discurso || "-"}
-                        </span>
-                        </div>
-                    )}
-                    {v.Segundo_Discurso && (
-                        <div className="flex flex-col items-center gap-1.5 py-4 border-b border-slate-100">
-                        <span className="text-sm sm:text-base font-semibold text-slate-600 text-center">
-                            {v.Segundo_Discurso}
-                        </span>
-                        <span className="text-base sm:text-lg font-bold text-slate-900 text-center">
-                            {v.Discursante_Segundo_Discurso || "-"}
-                        </span>
-                        </div>
-                    )}
-                    {v.Tercer_Discurso && (
-                        <div className="flex flex-col items-center gap-1.5 py-4 border-b border-slate-100">
-                        <span className="text-sm sm:text-base font-semibold text-slate-600 text-center">
-                            {v.Tercer_Discurso}
-                        </span>
-                        <span className="text-base sm:text-lg font-bold text-slate-900 text-center">
-                            {v.Discursante_Tercer_Discurso || "-"}
-                        </span>
-                        </div>
-                    )}
-                    {v.Estudio_Biblico && (
-                        <div>
-                        <div className="flex flex-col items-center gap-1.5 py-4 border-b border-slate-100">
-                        <span className="text-sm sm:text-base font-semibold text-slate-600 text-center">
-                            {v.Estudio_Biblico}
-                        </span>
-                        </div>
-                        <div className="flex justify-between items-center gap-4 text-sm py-3 border-b border-slate-100">
-                        <span className="font-semibold text-slate-600">Conductor y Lector:</span>
-                        <span className="font-bold text-slate-900">{v.Conductor_Lector || "-"}</span>
-                        </div>
-                        </div>
-                    )}
-                    </div>
-
-                    <div className="pt-2 text-sm sm:text-base">
-                    <div className="flex justify-between items-center gap-4 py-3 border-b border-slate-100">
-                        <span className="font-semibold text-slate-600">Cántico y Oración:</span>
-                        <span className="font-bold text-slate-900">{v.Cantico_Oracion || "-"}</span>
-                    </div>
-                    <div className="flex justify-between items-center gap-4 py-3">
-                        <span className="font-semibold text-slate-600">Limpieza y Capitán:</span>
-                        <span className="font-bold text-slate-900">{v.Limpieza_Encargado || "-"}</span>
-                    </div>
-                    </div>
-                </div>
-                ))}
-            </div>
-            </section>
-        )}
-
-        </div>
-    </div>
+      </div>
     )
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-md mx-auto mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
+        <p className="text-xs text-red-500 font-medium">{error}</p>
+      </div>
+    )
+  }
+
+return (
+    <div className="w-full space-y-2 pb-10">
+
+      {/* FECHA DESTACADA */}
+      {fechaActiva && (
+        <div className="flex justify-center py-5">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white shadow-md text-base font-black tracking-wide">
+            <Calendar className="w-5 h-5 shrink-0" />
+            <span>Miércoles: {fechaActiva}</span>
+          </div>
+        </div>
+      )}
+
+      {/* TESOROS DE LA BIBLIA */}
+      {tesoros.length > 0 && (
+        <section className="w-full bg-white dark:bg-zinc-900 border-y border-zinc-200 dark:border-zinc-800 p-4 space-y-4 shadow-sm">
+          <header className="flex items-center gap-2.5 pb-3 border-b border-zinc-200 dark:border-zinc-800">
+            <BookOpen className="w-6 h-6 text-indigo-600 dark:text-indigo-400 shrink-0" />
+            <h3 className="text-lg sm:text-xl font-black text-zinc-900 dark:text-zinc-100 uppercase tracking-wide">
+              Tesoros de la Biblia
+            </h3>
+          </header>
+
+          <div className="space-y-4">
+            {tesoros.map((t, i) => (
+              <div key={i} className="space-y-3.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 bg-indigo-500/15 p-3.5 rounded-xl">
+                  <span className="text-xs font-bold text-zinc-600 dark:text-zinc-400 uppercase">Presidente:</span>
+                  <span className="text-base sm:text-lg font-black text-indigo-600 dark:text-indigo-400">{t.Presidente || "—"}</span>
+                </div>
+
+                <div className="space-y-2 text-sm sm:text-base text-zinc-800 dark:text-zinc-200 px-1">
+                  <div className="flex justify-between py-1.5 border-b border-zinc-100 dark:border-zinc-800/80">
+                    <span className="font-semibold text-zinc-500 dark:text-zinc-400">Sala B:</span>
+                    <strong className="text-zinc-900 dark:text-zinc-100 font-extrabold">{t["Sala B"] || "—"}</strong>
+                  </div>
+                  <div className="flex justify-between py-1.5 border-b border-zinc-100 dark:border-zinc-800/80">
+                    <span className="font-semibold text-zinc-500 dark:text-zinc-400">Cántico:</span>
+                    <strong className="text-zinc-900 dark:text-zinc-100 font-extrabold">Canción {t.Cantico || "—"}</strong>
+                  </div>
+                  <div className="flex justify-between py-1.5">
+                    <span className="font-semibold text-zinc-500 dark:text-zinc-400">Oración:</span>
+                    <strong className="text-zinc-900 dark:text-zinc-100 font-extrabold">{t.Oracion || "—"}</strong>
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-1">
+                  <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 space-y-2.5">
+                    <p className="text-sm sm:text-base font-black text-indigo-600 dark:text-indigo-400 flex justify-between items-center gap-2">
+                      <span>1. {t.Titulo_Tesoros || "—"}</span>
+                      <span className="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-200 dark:bg-zinc-900 px-2.5 py-1 rounded-lg shrink-0">(10 mins.)</span>
+                    </p>
+                    <p className="text-sm sm:text-base font-extrabold text-zinc-900 dark:text-zinc-100 pt-1">
+                      Discursante: <span className="font-normal">{t.Discursante || "—"}</span>
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 space-y-2.5">
+                    <p className="text-sm sm:text-base font-black text-indigo-600 dark:text-indigo-400 flex justify-between items-center gap-2">
+                      <span>2. Busquemos perlas escondidas</span>
+                      <span className="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-200 dark:bg-zinc-900 px-2.5 py-1 rounded-lg shrink-0">(10 mins.)</span>
+                    </p>
+                    <p className="text-sm sm:text-base font-extrabold text-zinc-900 dark:text-zinc-100 pt-1">
+                      Conductor: <span className="font-normal">{t.Conductor_Perlas || "—"}</span>
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 space-y-2.5">
+                    <div className="flex justify-between items-center gap-2">
+                      <p className="text-sm sm:text-base font-black text-indigo-600 dark:text-indigo-400">
+                        3. Lectura de la Biblia
+                      </p>
+                      <span className="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-200 dark:bg-zinc-900 px-2.5 py-1 rounded-lg shrink-0">(4 mins.)</span>
+                    </div>
+
+                    {t.Lectura_Biblia && (
+                      <p className="text-sm font-extrabold text-zinc-800 dark:text-zinc-200">
+                        Lectura Semanal: <span className="font-normal">{t.Lectura_Biblia}</span>
+                      </p>
+                    )}
+
+                    <div className="grid grid-cols-2 gap-2 pt-1 text-sm sm:text-base border-t border-zinc-200 dark:border-zinc-700/40 mt-2">
+                      <p className="font-bold text-zinc-900 dark:text-zinc-100 pt-1">Lector Sala A: <span className="font-normal">{t.Lector_A || "—"}</span></p>
+                      <p className="font-bold text-zinc-900 dark:text-zinc-100 pt-1">Lector Sala B: <span className="font-normal">{t.Lector_B || "—"}</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* MEJORES MAESTROS */}
+      {maestros.length > 0 && (
+        <section className="w-full bg-white dark:bg-zinc-900 border-y border-zinc-200 dark:border-zinc-800 p-4 space-y-4 shadow-sm">
+          <header className="flex items-center gap-2.5 pb-3 border-b border-zinc-200 dark:border-zinc-800">
+            <Users className="w-6 h-6 text-indigo-600 dark:text-indigo-400 shrink-0" />
+            <h3 className="text-lg sm:text-xl font-black text-zinc-900 dark:text-zinc-100 uppercase tracking-wide">
+              Seamos Mejores Maestros
+            </h3>
+          </header>
+
+          <div className="space-y-3">
+            {maestros.map((m, i) => (
+              <div key={i} className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 space-y-2.5">
+                <p className="text-sm sm:text-base font-black text-indigo-600 dark:text-indigo-400 flex justify-between items-center">
+                  <span>{m.Titulo || "—"}</span>
+                  <span className="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-200 dark:bg-zinc-900 px-2.5 py-1 rounded-lg">({m.Tiempo || "—"} mins.)</span>
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-sm sm:text-base pt-1">
+                  <p className="font-bold text-zinc-900 dark:text-zinc-100">Sala A: <span className="font-normal">{m.Asignados_Sala_A || "—"}</span></p>
+                  <p className="font-bold text-zinc-900 dark:text-zinc-100">Sala B: <span className="font-normal">{m.Asignados_Sala_B || "—"}</span></p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* NUESTRA VIDA CRISTIANA */}
+      {vida.length > 0 && (
+        <section className="w-full bg-white dark:bg-zinc-900 border-y border-zinc-200 dark:border-zinc-800 p-4 space-y-4 shadow-sm">
+          <header className="flex items-center gap-2.5 pb-3 border-b border-zinc-200 dark:border-zinc-800">
+            <Heart className="w-6 h-6 text-indigo-600 dark:text-indigo-400 shrink-0" />
+            <h3 className="text-lg sm:text-xl font-black text-zinc-900 dark:text-zinc-100 uppercase tracking-wide">
+              Nuestra Vida Cristiana
+            </h3>
+          </header>
+
+          <div className="space-y-4">
+            {vida.map((v, i) => (
+              <div key={i} className="space-y-3.5">
+                <div className="flex justify-between py-2 border-b border-zinc-100 dark:border-zinc-800 text-sm sm:text-base">
+                  <span className="font-bold text-zinc-500 dark:text-zinc-400">Cántico intermedio:</span>
+                  <strong className="text-zinc-900 dark:text-zinc-100 font-black">Canción {v.Cantico_Intermedio || "—"}</strong>
+                </div>
+
+                <div className="space-y-3 pt-1">
+                {v.Primer_Discurso && (
+                    <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 space-y-2.5">
+                      <p className="text-sm sm:text-base font-black text-indigo-600 dark:text-indigo-400 flex justify-between items-center gap-2">
+                        <span>{v.Primer_Discurso}</span>
+                        <span className="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-200 dark:bg-zinc-900 px-2.5 py-1 rounded-lg shrink-0">({v.Tiempo_S} mins.)</span>
+                      </p>
+                      <p className="text-sm sm:text-base font-extrabold text-zinc-900 dark:text-zinc-100 pt-1">
+                        Discursante: <span className="font-normal">{v.Discursante_Primer_Discurso || "—"}</span>
+                      </p>
+                    </div>
+                  )}
+
+                  {v.Segundo_Discurso && (
+                    <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 space-y-2.5">
+                      <p className="text-sm sm:text-base font-black text-indigo-600 dark:text-indigo-400 flex justify-between items-center gap-2">
+                        <span>{v.Segundo_Discurso}</span>
+                        <span className="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-200 dark:bg-zinc-900 px-2.5 py-1 rounded-lg shrink-0">({v.Tiempo_S} mins.)</span>
+                      </p>
+                      <p className="text-sm sm:text-base font-extrabold text-zinc-900 dark:text-zinc-100 pt-1">
+                        Discursante: <span className="font-normal">{v.Discursante_Segundo_Discurso || "—"}</span>
+                      </p>
+                    </div>
+                  )}
+
+                  {v.Conductor_Lector && (
+                    <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/60 space-y-2.5">
+                      <p className="text-sm sm:text-base font-black text-indigo-600 dark:text-indigo-400 flex justify-between items-center">
+                        <span>{v.Numero_Estudio_Biblico ? `${v.Numero_Estudio_Biblico}. ` : ""}Estudio Bíblico de la Congregación</span>
+                        <span className="text-xs sm:text-sm font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-200 dark:bg-zinc-900 px-2.5 py-1 rounded-lg">(30 mins.)</span>
+                      </p>
+                      <p className="text-sm sm:text-base font-extrabold text-zinc-900 dark:text-zinc-100 pt-1">
+                        Conductor y Lector: <span className="font-normal">{v.Conductor_Lector}</span>
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="pt-3 mt-2 border-t border-zinc-200 dark:border-zinc-800 space-y-3 text-sm sm:text-base">
+                  <div className="flex justify-between py-1.5">
+                    <span className="font-bold text-zinc-500 dark:text-zinc-400">Cántico Final y Oración:</span>
+                    <strong className="text-zinc-900 dark:text-zinc-100 font-black">{v.Cantico_Final ? `Canción ${v.Cantico_Final} / ${v.Oracion_Final || ''}` : "—"}</strong>
+                  </div>
+                  {v.Grupo_Limpieza && (
+                    <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                      <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Limpieza del Salón</span>
+                      <span className="text-sm sm:text-base font-black text-zinc-900 dark:text-zinc-100">
+                        {v.Grupo_Limpieza} {v.Encargado ? `(${v.Encargado})` : ''}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+    </div>
+  )
 }
