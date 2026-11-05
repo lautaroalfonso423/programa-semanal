@@ -318,12 +318,12 @@ export default function Asignaciones() {
                                         {element.Limpieza && element.Limpieza.trim() !== "" && (
                                             <div className="pt-2.5 mt-2.5 border-t border-slate-100 dark:border-zinc-800/60 flex items-center justify-between">
                                                 <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">Limpieza</span>
-                                                <span className="text-ls font-bold px-3 py-1 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                                                <span className="text-sm font-bold px-1 py-1 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                                                     {element.Limpieza}
                                                 </span>
 
                                                 <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-zinc-500">Grupo</span>
-                                                <span className="text-ls font-bold px-3 py-1 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                                                <span className="text-sm font-bold px-1 py-1 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                                                     {element.Grupo}
                                                 </span>
                                             </div>
