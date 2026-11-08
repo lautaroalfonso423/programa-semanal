@@ -9,6 +9,8 @@ export const DIAS_DE_SEMANA = [
     "Viernes Tarde",
     "Sabado Mañana",
     "Sabado Tarde",
+    "Domingo Mañana",
+    "Domingo Tarde",
 ];
 
 export const LISTA_NOMBRES = [
