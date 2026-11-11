@@ -11,7 +11,7 @@ type Salida = {
     Dato_Adicional: string
     Conductor: string
     Territorio: string
-    Link_del_Terrirotorio: string
+    Coordenadas: string
     Territorio_Secundario: string
     Link_de_Zoom: string
 }
@@ -73,10 +73,14 @@ export default function PorCongre() {
         const rawLink = (linkVal || "").trim()
         const rawTerritorio = (territorioVal || "").trim()
 
+        const linkLimpiado = rawLink.replace(/\s*\(\d+\)$/, "").trim()
+
         let newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F`
 
-        if (rawLink.includes(",") && !isNaN(parseFloat(rawLink.split(",")[0]))) {
-            const coords = rawLink.replace(/\s+/g, "")
+       if (linkLimpiado.includes(",") && !isNaN(parseFloat(linkLimpiado.split(",")[0]))) {
+
+            const coords = linkLimpiado.replace(/\s+/g, "")
+
             newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ll=${coords}&z=17`
         } else if (rawTerritorio) {
             newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&q=${encodeURIComponent(rawTerritorio)}`
@@ -148,7 +152,7 @@ export default function PorCongre() {
                     </div>
                 </div>
             </div>
-            
+
             {/* Visualizador de Territorio */}
             <div id="visualizador-mapa" className="w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md bg-white dark:bg-[#182030] scroll-mt-4">
                 <div className="p-4 bg-indigo-500/10 border-b border-indigo-500/20 text-base font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-2.5">
@@ -198,6 +202,7 @@ export default function PorCongre() {
                     </p>
                 ) : (
                     salidasFiltradas.map((element, idx) => (
+
                         <div
                             key={idx}
                             className="rounded-2xl bg-slate-50 dark:bg-[#182030]/50 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm"
@@ -236,7 +241,12 @@ export default function PorCongre() {
                                 <p>
                                     <strong className="font-bold text-slate-900 dark:text-slate-100">Territorio Principal:</strong>{" "}
                                     <button
-                                        onClick={() => handleSelectTerritory(element.Territorio, element.Link_del_Terrirotorio)}
+                                        onClick={() => {
+                                            handleSelectTerritory(element.Territorio,
+                                                element.Coordenadas
+                                            )
+                                        }
+                                        }
                                         className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold bg-transparent border-none p-0 cursor-pointer text-left inline"
                                     >
                                         {element.Territorio || "Ver Territorio"}

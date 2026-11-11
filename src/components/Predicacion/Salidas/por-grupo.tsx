@@ -11,7 +11,7 @@ type SalidaGrupo = {
     Dato_Adicional: string
     Conductor: string
     Territorio: string
-    Link_del_Terrirotorio: string
+    Coordenadas: string
     Territorio_Secundario: string
     Link_de_Zoom: string
 }
@@ -237,7 +237,7 @@ export default function PorGrupo() {
                                     <p>
                                         <strong className="font-bold text-slate-900 dark:text-slate-100">Territorio Principal:</strong>{" "}
                                         <button
-                                            onClick={() => handleSelectTerritory(element.Territorio, element.Link_del_Terrirotorio)}
+                                            onClick={() => handleSelectTerritory(element.Territorio, element.Coordenadas)}
                                             className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold bg-transparent border-none p-0 cursor-pointer text-left inline"
                                         >
                                             {element.Territorio || "Ver Territorio"}
