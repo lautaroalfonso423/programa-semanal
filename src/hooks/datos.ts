@@ -3,6 +3,7 @@ export const DIAS_DE_SEMANA = [
     "Martes Mañana",
     "Martes Tarde",
     "Miércoles Mañana",
+    "Miércoles Tarde",
     "Jueves Mañana",
     "Jueves Tarde",
     "Viernes Mañana",

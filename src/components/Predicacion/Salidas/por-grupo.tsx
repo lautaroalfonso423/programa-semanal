@@ -35,10 +35,26 @@ export default function PorGrupo() {
 
                 const url = `https://opensheet.elk.sh/122SwD53EyAELMR6x-dD86eRVIW4Uva-9W8yOtpred9k/Tabla_Grupo`
                 const res = await fetch(url)
-                if (!res.ok) throw new Error("No se encontraron datos")
+                if (!res.ok) throw new Error("No se pudieron traer los datos desde el servidor.")
 
-                const data: SalidaGrupo[] = await res.json()
-                const filtradas = data.filter((item) => DIAS_DE_SEMANA.includes(item.Dia))
+                const data = await res.json()
+
+                if (!Array.isArray(data)) {
+                    throw new Error("La hoja de cálculo no devolvió un formato válido o está vacía.")
+                }
+
+                const diasNormalizados = DIAS_DE_SEMANA.map((d) => d.trim().toLowerCase())
+
+                const filtradas = data
+                    .filter((item: SalidaGrupo) => {
+                        const diaItem = (item.Dia || "").trim().toLowerCase()
+                        return diasNormalizados.includes(diaItem)
+                    })
+                    .map((item: SalidaGrupo) => ({
+                        ...item,
+                        Dia: (item.Dia || "").trim(),
+                        Dato_Adicional: (item.Dato_Adicional || "").trim(),
+                    }))
 
                 setSalidas(filtradas)
             } catch (err: any) {
@@ -52,8 +68,8 @@ export default function PorGrupo() {
     }, [])
 
     const diasDisponibles = useMemo(() => {
-        const setDías = new Set(salidas.map((s) => s.Dia).filter(Boolean))
-        return Array.from(setDías)
+        const setDias = new Set(salidas.map((s) => s.Dia).filter(Boolean))
+        return Array.from(setDias)
     }, [salidas])
 
     const gruposDisponibles = useMemo(() => {
@@ -95,7 +111,24 @@ export default function PorGrupo() {
     }
 
     if (error) {
-        return <p className="text-base text-red-500 p-6 font-medium">{error}</p>
+        return (
+            <div className="p-6 rounded-2xl bg-red-500/10 border border-red-500/20 text-center">
+                <p className="text-base text-red-600 dark:text-red-400 font-semibold">{error}</p>
+            </div>
+        )
+    }
+
+    if (salidas.length === 0) {
+        return (
+            <div className="p-8 rounded-2xl bg-slate-50 dark:bg-[#182030]/50 border border-slate-200 dark:border-slate-800 text-center space-y-2">
+                <p className="text-lg font-semibold text-slate-700 dark:text-slate-200">
+                    No hay salidas por grupo cargadas actualmente.
+                </p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                    La hoja de grupos está vacía o aún no tiene registros publicados.
+                </p>
+            </div>
+        )
     }
 
     return (

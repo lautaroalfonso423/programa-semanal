@@ -35,10 +35,26 @@ export default function PorCongre() {
 
                 const url = `https://opensheet.elk.sh/122SwD53EyAELMR6x-dD86eRVIW4Uva-9W8yOtpred9k/Tabla_General`
                 const res = await fetch(url)
-                if (!res.ok) throw new Error("No se encontraron datos")
+                if (!res.ok) throw new Error("No se pudieron traer los datos desde el servidor.")
 
-                const data: Salida[] = await res.json()
-                const filtradas = data.filter((item) => DIAS_DE_SEMANA.includes(item.Dia))
+                const data = await res.json()
+
+                if (!Array.isArray(data)) {
+                    throw new Error("La hoja de cálculo no devolvió un formato válido o está vacía.")
+                }
+
+                const diasNormalizados = DIAS_DE_SEMANA.map((d) => d.trim().toLowerCase())
+
+                const filtradas = data
+                    .filter((item: Salida) => {
+                        const diaItem = (item.Dia || "").trim().toLowerCase()
+                        return diasNormalizados.includes(diaItem)
+                    })
+                    .map((item: Salida) => ({
+                        ...item,
+                        Dia: (item.Dia || "").trim(),
+                        Hora: (item.Hora || "").trim(),
+                    }))
 
                 setSalidas(filtradas)
             } catch (err: any) {
@@ -52,8 +68,8 @@ export default function PorCongre() {
     }, [])
 
     const diasDisponibles = useMemo(() => {
-        const setDías = new Set(salidas.map((s) => s.Dia).filter(Boolean))
-        return Array.from(setDías)
+        const setDias = new Set(salidas.map((s) => s.Dia).filter(Boolean))
+        return Array.from(setDias)
     }, [salidas])
 
     const horasDisponibles = useMemo(() => {
@@ -77,10 +93,8 @@ export default function PorCongre() {
 
         let newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F`
 
-       if (linkLimpiado.includes(",") && !isNaN(parseFloat(linkLimpiado.split(",")[0]))) {
-
+        if (linkLimpiado.includes(",") && !isNaN(parseFloat(linkLimpiado.split(",")[0]))) {
             const coords = linkLimpiado.replace(/\s+/g, "")
-
             newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ll=${coords}&z=17`
         } else if (rawTerritorio) {
             newUrl = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&q=${encodeURIComponent(rawTerritorio)}`
@@ -99,7 +113,24 @@ export default function PorCongre() {
     }
 
     if (error) {
-        return <p className="text-base text-red-500 p-6 font-medium">{error}</p>
+        return (
+            <div className="p-6 rounded-2xl bg-red-500/10 border border-red-500/20 text-center">
+                <p className="text-base text-red-600 dark:text-red-400 font-semibold">{error}</p>
+            </div>
+        )
+    }
+
+    if (salidas.length === 0) {
+        return (
+            <div className="p-8 rounded-2xl bg-slate-50 dark:bg-[#182030]/50 border border-slate-200 dark:border-slate-800 text-center space-y-2">
+                <p className="text-lg font-semibold text-slate-700 dark:text-slate-200">
+                    No hay datos cargados actualmente.
+                </p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                    La tabla de salidas generales está vacía o aún no tiene registros publicados.
+                </p>
+            </div>
+        )
     }
 
     return (
@@ -202,7 +233,6 @@ export default function PorCongre() {
                     </p>
                 ) : (
                     salidasFiltradas.map((element, idx) => (
-
                         <div
                             key={idx}
                             className="rounded-2xl bg-slate-50 dark:bg-[#182030]/50 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm"
@@ -242,11 +272,8 @@ export default function PorCongre() {
                                     <strong className="font-bold text-slate-900 dark:text-slate-100">Territorio Principal:</strong>{" "}
                                     <button
                                         onClick={() => {
-                                            handleSelectTerritory(element.Territorio,
-                                                element.Coordenadas
-                                            )
-                                        }
-                                        }
+                                            handleSelectTerritory(element.Territorio, element.Coordenadas)
+                                        }}
                                         className="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold bg-transparent border-none p-0 cursor-pointer text-left inline"
                                     >
                                         {element.Territorio || "Ver Territorio"}
